@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  *  Entity
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
+ * 2020-12-21 14:47:28
  */
 @Data
 @TableName("group_level")
@@ -86,7 +86,7 @@ public class GroupLevel {
     /**
      * 数据和应用可用性,10
      */
-    @TableField("DataAvailability")
+    @TableField("dataAvailability")
     private String dataavailability;
 
     /**

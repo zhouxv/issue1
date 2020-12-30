@@ -22,7 +22,6 @@ import java.util.List;
  *  Service实现
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @Service
 @RequiredArgsConstructor
@@ -42,7 +41,7 @@ public class IIndexServiceImpl extends ServiceImpl<IndexMapper, Index> implement
     @Override
     public List<Index> findIndexs(Index index) {
         LambdaQueryWrapper<Index> queryWrapper = new LambdaQueryWrapper<>();
-        // TODO 设置查询条件
+        //按indexId索引
         if(index.getIndexid()!=null) queryWrapper.eq(Index::getIndexid,index.getIndexid());
         return this.baseMapper.selectList(queryWrapper);
     }

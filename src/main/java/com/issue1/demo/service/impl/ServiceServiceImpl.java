@@ -20,7 +20,6 @@ import java.util.List;
  *  Service实现
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -40,7 +39,8 @@ public class ServiceServiceImpl extends ServiceImpl<ServiceMapper, Service> impl
     @Override
     public List<Service> findServices(Service service) {
 	    LambdaQueryWrapper<Service> queryWrapper = new LambdaQueryWrapper<>();
-		// TODO 设置查询条件
+        //按servieceId索引
+        if(service.getServiceid()!=null) queryWrapper.eq(Service::getServiceid,service.getServiceid());
 		return this.baseMapper.selectList(queryWrapper);
     }
 

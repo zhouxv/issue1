@@ -21,7 +21,6 @@ import java.util.List;
  *  Service实现
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @Service
 @RequiredArgsConstructor
@@ -41,7 +40,8 @@ public class ServiceDetailServiceImpl extends ServiceImpl<ServiceDetailMapper, S
     @Override
     public List<ServiceDetail> findServiceDetails(ServiceDetail serviceDetail) {
 	    LambdaQueryWrapper<ServiceDetail> queryWrapper = new LambdaQueryWrapper<>();
-		// TODO 设置查询条件
+        //按servieceId索引
+        if(serviceDetail.getServiceid()!=null) queryWrapper.eq(ServiceDetail::getServiceid,serviceDetail.getServiceid());
 		return this.baseMapper.selectList(queryWrapper);
     }
 

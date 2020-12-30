@@ -1,5 +1,6 @@
 package com.issue1.demo.service.impl;
 
+import com.issue1.demo.entity.SagLevel;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.mapper.GroupLevelMapper;
@@ -21,7 +22,6 @@ import java.util.List;
  *  Service实现
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @Service
 @RequiredArgsConstructor
@@ -41,7 +41,8 @@ public class GroupLevelServiceImpl extends ServiceImpl<GroupLevelMapper, GroupLe
     @Override
     public List<GroupLevel> findGroupLevels(GroupLevel groupLevel) {
 	    LambdaQueryWrapper<GroupLevel> queryWrapper = new LambdaQueryWrapper<>();
-		// TODO 设置查询条件
+        //按servieceId索引
+        if(groupLevel.getServiceid()!=null) queryWrapper.eq(GroupLevel::getServiceid,groupLevel.getServiceid());
 		return this.baseMapper.selectList(queryWrapper);
     }
 

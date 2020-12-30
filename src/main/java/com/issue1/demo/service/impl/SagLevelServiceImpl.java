@@ -1,5 +1,6 @@
 package com.issue1.demo.service.impl;
 
+import com.issue1.demo.entity.ServiceDetail;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.demo.entity.SagLevel;
 import com.issue1.demo.mapper.SagLevelMapper;
@@ -21,7 +22,6 @@ import java.util.List;
  *  Service实现
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @Service
 @RequiredArgsConstructor
@@ -41,7 +41,8 @@ public class SagLevelServiceImpl extends ServiceImpl<SagLevelMapper, SagLevel> i
     @Override
     public List<SagLevel> findSagLevels(SagLevel sagLevel) {
 	    LambdaQueryWrapper<SagLevel> queryWrapper = new LambdaQueryWrapper<>();
-		// TODO 设置查询条件
+        //按servieceId索引
+        if(sagLevel.getServiceid()!=null) queryWrapper.eq(SagLevel::getServiceid,sagLevel.getServiceid());
 		return this.baseMapper.selectList(queryWrapper);
     }
 
