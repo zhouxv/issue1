@@ -59,16 +59,6 @@ public class TestResultController extends BaseController {
         return ResponseBo.fail();
     }
 
-    @GetMapping({"getAllPage"})
-    public ResponseBo testResultList(QueryRequest request, TestResult testResult) {
-        IPage<TestResult> data = this.testResultService.findTestResults(request, testResult);
-        if (data != null) {
-            return ResponseBo.ok(getDataTable(data));
-        }
-        return ResponseBo.fail();
-    }
-
-
     @PostMapping({"add"})
     public ResponseBo addTestResult(@Valid TestResult testResult) {
         CountIndexLevel.countTestResult(testResult);
@@ -89,14 +79,6 @@ public class TestResultController extends BaseController {
 //        return ResponseBo.fail();
 //    }
 
-    @DeleteMapping({"delete"})
-    public ResponseBo deleteTestResult(TestResult testResult) {
-        if (this.testResultService.deleteTestResult(testResult)) {
-            return ResponseBo.ok();
-        } else {
-            return ResponseBo.fail();
-        }
-    }
 
     @PostMapping({"update"})
     public ResponseBo updateTestResult(TestResult testResult) {

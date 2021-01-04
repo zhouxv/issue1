@@ -19,7 +19,6 @@ import java.util.List;
  * Controller
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @Slf4j
 @Validated
@@ -33,7 +32,6 @@ public class ServiceDetailController extends BaseController {
     /**
      * 如果你是使用的模版引擎进行渲染视图则可以生成这个返回视图,并用@Controller类前的注解@RestController换掉,后面返回json的方法记得也加上@ResponseBody
      *
-     * @GetMapping("您的templates目录下的视图文件夹名" + "serviceDetail")
      * public String serviceDetailIndex(){
      * return "您的templates目录下的视图文件夹名/serviceDetail/serviceDetail";
      * }
@@ -47,29 +45,10 @@ public class ServiceDetailController extends BaseController {
         return ResponseBo.fail();
     }
 
-    @GetMapping({"getAllPage"})
-    public ResponseBo getAllServiceDetailsPage(QueryRequest request, ServiceDetail serviceDetail) {
-        IPage<ServiceDetail> data = this.serviceDetailService.findServiceDetails(request, serviceDetail);
-        if (data != null) {
-            return ResponseBo.ok(getDataTable(data));
-        }
-        return ResponseBo.fail();
-    }
-
 
     @PostMapping({"add"})
     public ResponseBo addServiceDetail(@Valid ServiceDetail serviceDetail) {
         if (this.serviceDetailService.createServiceDetail(serviceDetail)) {
-            return ResponseBo.ok();
-        } else {
-            return ResponseBo.fail();
-        }
-    }
-
-
-    @DeleteMapping({"delete"})
-    public ResponseBo deleteServiceDetail(ServiceDetail serviceDetail) {
-        if (this.serviceDetailService.deleteServiceDetail(serviceDetail)) {
             return ResponseBo.ok();
         } else {
             return ResponseBo.fail();

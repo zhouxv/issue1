@@ -1,5 +1,6 @@
 package com.issue1.demo.controller;
 
+import com.issue1.demo.entity.SagLevel;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.dependence.common.entity.ResponseBo;
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+
+import static com.issue1.demo.util.DTO.DtoListGroupLevel;
+import static com.issue1.demo.util.DTO.DtoListSagLevel;
 
 /**
  * Controller
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @Slf4j
 @Validated
@@ -33,7 +37,6 @@ public class GroupLevelController extends BaseController {
     /**
      * 如果你是使用的模版引擎进行渲染视图则可以生成这个返回视图,并用@Controller类前的注解@RestController换掉,后面返回json的方法记得也加上@ResponseBody
      *
-     * @GetMapping("您的templates目录下的视图文件夹名" + "groupLevel")
      * public String groupLevelIndex(){
      * return "您的templates目录下的视图文件夹名/groupLevel/groupLevel";
      * }
@@ -47,42 +50,14 @@ public class GroupLevelController extends BaseController {
         return ResponseBo.fail();
     }
 
-    @GetMapping({"getAllPage"})
-    public ResponseBo getAllGroupLevelsPage(QueryRequest request, GroupLevel groupLevel) {
-        IPage<GroupLevel> data = this.groupLevelService.findGroupLevels(request, groupLevel);
-        if (data != null) {
-            return ResponseBo.ok(getDataTable(data));
+    @GetMapping({"getAllDto"})
+    public ResponseBo getAllGroupLevelsDto(GroupLevel groupLevel) {
+        List<GroupLevel> data = groupLevelService.findGroupLevels(groupLevel);
+        List<Map<String,Object>> mapList= DtoListGroupLevel(data);
+        if (mapList != null) {
+            return ResponseBo.ok(mapList);
         }
         return ResponseBo.fail();
-    }
-
-
-    @PostMapping({"add"})
-    public ResponseBo addGroupLevel(@Valid GroupLevel groupLevel) {
-        if (this.groupLevelService.createGroupLevel(groupLevel)) {
-            return ResponseBo.ok();
-        } else {
-            return ResponseBo.fail();
-        }
-    }
-
-
-    @DeleteMapping({"delete"})
-    public ResponseBo deleteGroupLevel(GroupLevel groupLevel) {
-        if (this.groupLevelService.deleteGroupLevel(groupLevel)) {
-            return ResponseBo.ok();
-        } else {
-            return ResponseBo.fail();
-        }
-    }
-
-    @PostMapping({"update"})
-    public ResponseBo updateGroupLevel(GroupLevel groupLevel) {
-        if (this.groupLevelService.updateGroupLevel(groupLevel)) {
-            return ResponseBo.ok();
-        } else {
-            return ResponseBo.fail();
-        }
     }
 
 }

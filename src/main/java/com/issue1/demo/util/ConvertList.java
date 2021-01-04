@@ -1,5 +1,6 @@
 package com.issue1.demo.util;
 
+import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.entity.TestResult;
 
 import java.util.ArrayList;
@@ -145,6 +146,58 @@ public class ConvertList {
         return list;
     }
 
+    //把groupLevel的23个结果存储到到list中
+    public static List<String> convertGroupLevel(GroupLevel groupLevel){
+        List<String> list = new ArrayList<>();
+        //1.边界防护
+        list.add(groupLevel.getPerimetersecurity());
+        //2.访问控制
+        list.add(groupLevel.getAccesscontrol());
+        //3.身份鉴别
+        list.add(groupLevel.getIdentityauthentication());
+        //4.密码支持
+        list.add(groupLevel.getCryptographicsupport());
+        //5.入侵防范
+        list.add(groupLevel.getIntrusionprevention());
+        //6.监控与检测
+        list.add(groupLevel.getMonitordetect());
+        //7.恶意代码防范
+        list.add(groupLevel.getMaliciouscoderesistance());
+        //8.数据保密性
+        list.add(groupLevel.getDataconfidentiality());
+        //9.数据完整性
+        list.add(groupLevel.getDataintegrity());
+        //10.数据和应用可用性
+        list.add(groupLevel.getDataavailability());
+        //11.数据销毁
+        list.add(groupLevel.getDatadestruction());
+        //12.数据备份恢复
+        list.add(groupLevel.getBackuprecovery());
+        //13.个人数据恢复
+        list.add(groupLevel.getDataprivacy());
+        //14.安全审计与验证
+        list.add(groupLevel.getSecurityvalidation());
+        //15.机构配置管理
+        list.add(groupLevel.getOrganizationalmanagement());
+        //16.剩余信息保护
+        list.add(groupLevel.getRedundancycleanup());
+        //17.安全策略
+        list.add(groupLevel.getSecuritypolicy());
+        //18.事件预警和处置
+        list.add(groupLevel.getEventalert());
+        //19.管理制度
+        list.add(groupLevel.getSystemmanagement());
+        //20.安全日志
+        list.add(groupLevel.getSecuritylog());
+        //21.流程管理
+        list.add(groupLevel.getProcessmanagement());
+        //22.服务协议
+        list.add(groupLevel.getServiceagreement());
+        //23.电子合同
+        list.add(groupLevel.getElectroniccontract());
+        return list;
+    }
+
     // 把字符串字符转换为double[]
     public static Double[] stringToDoubleArray(String str){
         String[] strArray = str.split(",");
@@ -165,4 +218,6 @@ public class ConvertList {
         }
         return doubleList;
     }
+
+
 }

@@ -19,7 +19,6 @@ public class CountSagLevel {
 
         //访问控制
         sList.add(groupLevel.getAccesscontrol());
-
         //密码支持
         sList.add(groupLevel.getCryptographicsupport());
         //数据保密性
