@@ -12,7 +12,6 @@ import java.util.List;
  *  Service接口
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 public interface IGroupLevelService extends IService<GroupLevel> {
     /**
@@ -52,4 +51,11 @@ public interface IGroupLevelService extends IService<GroupLevel> {
      * @param groupLevel groupLevel
      */
     Boolean deleteGroupLevel(GroupLevel groupLevel);
+
+    /**
+     * 根据ServiceId删除
+     *
+     * @param integer integer
+     */
+    Boolean deleteGroupLevelById(Integer integer);
 }

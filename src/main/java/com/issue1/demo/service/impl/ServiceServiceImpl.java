@@ -1,5 +1,6 @@
 package com.issue1.demo.service.impl;
 
+import com.issue1.demo.entity.TestResult;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.demo.entity.Service;
 import com.issue1.demo.mapper.ServiceMapper;
@@ -47,6 +48,7 @@ public class ServiceServiceImpl extends ServiceImpl<ServiceMapper, Service> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean createService(Service service) {
+        service.setDeletestate(1);
         return this.save(service);
     }
 
@@ -57,10 +59,18 @@ public class ServiceServiceImpl extends ServiceImpl<ServiceMapper, Service> impl
     }
 
     @Override
+    public Boolean deleteServiceById(Integer integer) {
+        Service service=new Service();
+        service.setServiceid(integer);
+        service.setDeletestate(0);
+        return this.saveOrUpdate(service);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteService(Service service) {
         LambdaQueryWrapper<Service> wrapper = new LambdaQueryWrapper<>();
-	    // TODO 设置删除条件
-	    return this.remove(wrapper);
+        // TODO 设置删除条件
+        return this.remove(wrapper);
 	}
 }

@@ -1,5 +1,6 @@
 package com.issue1.demo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.demo.entity.ServiceDetail;
 import com.issue1.demo.mapper.ServiceDetailMapper;
@@ -55,6 +56,17 @@ public class ServiceDetailServiceImpl extends ServiceImpl<ServiceDetailMapper, S
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateServiceDetail(ServiceDetail serviceDetail) {
         return this.saveOrUpdate(serviceDetail);
+    }
+
+    @Override
+    public Boolean deleteServiceDetailById(Integer integer) {
+        ServiceDetail serviceDetail=new ServiceDetail();
+        serviceDetail.setDeletestate(0);
+
+        LambdaUpdateWrapper<ServiceDetail> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(ServiceDetail::getServiceid,integer);
+
+        return this.update(serviceDetail,wrapper);
     }
 
     @Override

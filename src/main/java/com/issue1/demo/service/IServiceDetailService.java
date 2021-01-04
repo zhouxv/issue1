@@ -12,7 +12,6 @@ import java.util.List;
  *  Service接口
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 public interface IServiceDetailService extends IService<ServiceDetail> {
     /**
@@ -52,4 +51,11 @@ public interface IServiceDetailService extends IService<ServiceDetail> {
      * @param serviceDetail serviceDetail
      */
     Boolean deleteServiceDetail(ServiceDetail serviceDetail);
+
+    /**
+     * 根据ServiceId删除
+     *
+     * @param integer integer
+     */
+    Boolean deleteServiceDetailById(Integer integer);
 }

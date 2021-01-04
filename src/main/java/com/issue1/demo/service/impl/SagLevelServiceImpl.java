@@ -1,6 +1,8 @@
 package com.issue1.demo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.issue1.demo.entity.ServiceDetail;
+import com.issue1.demo.entity.TestResult;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.demo.entity.SagLevel;
 import com.issue1.demo.mapper.SagLevelMapper;
@@ -56,6 +58,17 @@ public class SagLevelServiceImpl extends ServiceImpl<SagLevelMapper, SagLevel> i
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateSagLevel(SagLevel sagLevel) {
         return this.saveOrUpdate(sagLevel);
+    }
+
+    @Override
+    public Boolean deleteSagLevelById(Integer integer) {
+        SagLevel sagLevel=new SagLevel();
+        sagLevel.setDeletestate(0);
+
+        LambdaUpdateWrapper<SagLevel> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SagLevel::getServiceid,integer);
+
+        return this.update(sagLevel,wrapper);
     }
 
     @Override

@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
  *  Entity
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @Data
 @TableName("test_result")
@@ -28,6 +27,12 @@ public class TestResult {
      */
     @TableField("serviceId")
     private Integer serviceid;
+
+    /**
+     * 删除状态
+     */
+    @TableField("deleteState")
+    private Integer deletestate;
 
     /**
      * 1,1,2,2,2,2,3,3,4 含义为在四个等级上的测评点结果为1/1,2/2,2/2,3/3,该指标等级为4

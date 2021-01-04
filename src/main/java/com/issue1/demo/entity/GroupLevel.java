@@ -30,6 +30,12 @@ public class GroupLevel {
     private Integer serviceid;
 
     /**
+     * 删除状态
+     */
+    @TableField("deleteState")
+    private Integer deletestate;
+
+    /**
      * 边界防护,1
      */
     @TableField("perimeterSecurity")

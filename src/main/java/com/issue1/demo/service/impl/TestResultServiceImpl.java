@@ -1,5 +1,7 @@
 package com.issue1.demo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.issue1.demo.entity.ServiceDetail;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.demo.entity.TestResult;
 import com.issue1.demo.mapper.TestResultMapper;
@@ -55,6 +57,17 @@ public class TestResultServiceImpl extends ServiceImpl<TestResultMapper, TestRes
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateTestResult(TestResult testResult) {
         return this.saveOrUpdate(testResult);
+    }
+
+    @Override
+    public Boolean deleteTestResultById(Integer integer) {
+        TestResult testResult=new TestResult();
+        testResult.setDeletestate(0);
+
+        LambdaUpdateWrapper<TestResult> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(TestResult::getServiceid,integer);
+
+        return this.update(testResult,wrapper);
     }
 
     @Override

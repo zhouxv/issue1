@@ -3,9 +3,8 @@ package com.issue1.dependence.common.entity;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.http.HttpStatus;
 
-/** 统一返回格式
- * @author helit747@gmail.com
- * @date 2020/9/19 下午8:50
+/**
+ * 统一返回格式
  */
 public class ResponseBo extends JSONObject {
     //如果想设置成可以连着点下去的就必须让其先实例化,如果想静态的访问则不能连着点下去,
@@ -21,8 +20,16 @@ public class ResponseBo extends JSONObject {
     public static ResponseBo ok() {
         return new ResponseBo();
     }
+
     public static ResponseBo ok(Object message) {
         ResponseBo responseBo = new ResponseBo();
+        responseBo.put("msg", message);
+        return responseBo;
+    }
+
+    public static ResponseBo ok(String string,Object message) {
+        ResponseBo responseBo = new ResponseBo();
+        responseBo.put("操作提示",string);
         responseBo.put("msg", message);
         return responseBo;
     }

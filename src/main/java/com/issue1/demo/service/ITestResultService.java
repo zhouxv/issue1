@@ -12,7 +12,6 @@ import java.util.List;
  *  Service接口
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 public interface ITestResultService extends IService<TestResult> {
     /**
@@ -52,4 +51,11 @@ public interface ITestResultService extends IService<TestResult> {
      * @param testResult testResult
      */
     Boolean deleteTestResult(TestResult testResult);
+
+    /**
+     * 根据ServiceId删除
+     *
+     * @param integer integer
+     */
+    Boolean deleteTestResultById(Integer integer);
 }

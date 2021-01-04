@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
  *  Entity
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 @Data
 @TableName("service")
@@ -28,6 +27,12 @@ public class Service {
      */
     @TableField("serviceName")
     private String servicename;
+
+    /**
+     * 删除状态
+     */
+    @TableField("deleteState")
+    private Integer deletestate;
 
     /**
      * 服务的参评公司

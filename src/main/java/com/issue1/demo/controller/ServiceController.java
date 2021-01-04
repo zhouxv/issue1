@@ -1,10 +1,11 @@
 package com.issue1.demo.controller;
 
+import com.issue1.demo.entity.ServiceDetail;
+import com.issue1.demo.service.*;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.dependence.common.entity.ResponseBo;
 import com.issue1.demo.entity.Service;
-import com.issue1.demo.service.IServiceService;
 
 import lombok.extern.slf4j.Slf4j;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -29,9 +30,21 @@ public class ServiceController extends BaseController {
     @Autowired
     private IServiceService serviceService;
 
+    @Autowired
+    private IServiceDetailService serviceDetailService;
+
+    @Autowired
+    private ITestResultService testResultService;
+
+    @Autowired
+    private IGroupLevelService groupLevelService;
+
+    @Autowired
+    private ISagLevelService sagLevelService;
+
     /**
      * 如果你是使用的模版引擎进行渲染视图则可以生成这个返回视图,并用@Controller类前的注解@RestController换掉,后面返回json的方法记得也加上@ResponseBody
-     *
+     * <p>
      * public String serviceIndex(){
      * return "您的templates目录下的视图文件夹名/service/service";
      * }
@@ -67,11 +80,39 @@ public class ServiceController extends BaseController {
 
     @DeleteMapping({"delete"})
     public ResponseBo deleteService(Service service) {
-        if (this.serviceService.deleteService(service)) {
-            return ResponseBo.ok();
-        } else {
-            return ResponseBo.fail();
+        if (service.getServiceid() == null) return ResponseBo.fail("该删除为单个entity删除,请传入serviceid");
+        Integer serviceId = service.getServiceid();
+
+        if (serviceService.deleteServiceById(serviceId)) {
+            System.out.println("Service deleteState=0 操作成功");
+        }else{
+            ResponseBo.fail("Service deleteState=0 操作失败");
         }
+
+        if (serviceDetailService.deleteServiceDetailById(serviceId)) {
+            System.out.println("ServiceDetailService deleteState=0 操作成功");
+        }else{
+            ResponseBo.fail("ServiceDetailService deleteState=0 操作失败");
+        }
+
+        if (testResultService.deleteTestResultById(serviceId)) {
+            System.out.println("TestResultService deleteState=0 操作成功");
+        }else{
+            ResponseBo.fail("TestResultService deleteState=0 操作失败");
+        }
+
+        if (groupLevelService.deleteGroupLevelById(serviceId)) {
+            System.out.println("GroupLevelService deleteState=0 操作成功");
+        }else{
+            ResponseBo.fail("GroupLevelService deleteState=0 操作失败");
+        }
+
+        if (sagLevelService.deleteSagLevelById(serviceId)) {
+            System.out.println("SagLevelService deleteState=0 操作成功");
+        }else{
+            ResponseBo.fail("SagLevelService deleteState=0 操作失败");
+        }
+        return ResponseBo.ok();
     }
 
     @PostMapping({"update"})

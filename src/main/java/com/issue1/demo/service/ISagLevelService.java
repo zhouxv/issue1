@@ -12,7 +12,6 @@ import java.util.List;
  *  Service接口
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 public interface ISagLevelService extends IService<SagLevel> {
     /**
@@ -52,4 +51,11 @@ public interface ISagLevelService extends IService<SagLevel> {
      * @param sagLevel sagLevel
      */
     Boolean deleteSagLevel(SagLevel sagLevel);
+
+    /**
+     * 根据ServiceId删除
+     *
+     * @param integer integer
+     */
+    Boolean deleteSagLevelById(Integer integer);
 }

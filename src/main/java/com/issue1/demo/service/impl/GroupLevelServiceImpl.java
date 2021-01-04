@@ -1,6 +1,9 @@
 package com.issue1.demo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.issue1.demo.entity.SagLevel;
+import com.issue1.demo.entity.ServiceDetail;
+import com.issue1.demo.entity.TestResult;
 import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.mapper.GroupLevelMapper;
@@ -56,6 +59,17 @@ public class GroupLevelServiceImpl extends ServiceImpl<GroupLevelMapper, GroupLe
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateGroupLevel(GroupLevel groupLevel) {
         return this.saveOrUpdate(groupLevel);
+    }
+
+    @Override
+    public Boolean deleteGroupLevelById(Integer integer) {
+        GroupLevel groupLevel=new GroupLevel();
+        groupLevel.setDeletestate(0);
+
+        LambdaUpdateWrapper<GroupLevel> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(GroupLevel::getServiceid,integer);
+
+        return this.update(groupLevel,wrapper);
     }
 
     @Override
