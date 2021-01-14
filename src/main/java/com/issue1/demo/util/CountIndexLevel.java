@@ -13,37 +13,39 @@ import static com.issue1.demo.util.ConvertList.stringToDoubleArray;
  */
 public class CountIndexLevel {
     /**
-     * 计算符合度是否达到要求
-     *
-     * @param x double 达到测评要求的指标条目数量
-     * @param y double 测评指标条目总数
-     * @return boolean
+     计算符合度是否达到要求
+
+     @param x double 达到测评要求的指标条目数量
+     @param y double 测评指标条目总数
+     @return boolean
      */
     public static boolean conformity(double x, double y) {
         boolean bool = (x / y > 0.5);
-        System.out.println(x + "/" + y + "=" + bool);
+        System.out.println(x + "/" + y + ">0.5? " + bool);
         return bool;
     }
 
     /**
-     * 计算某个指标的等级
-     *
-     * @param str String 字符串中四个等级的符合度，以逗号分隔，“1,1,1,1,1,1,1,1”，共包含八个数字，
-     * @return String
+     计算某个指标的等级
+
+     @param str String 字符串中四个等级的符合度，以逗号分隔，“1,1,1,1,1,1,1,1”，共包含八个数字，
+     @return String
      */
     public static String indexLevel(String str) {
         int indexLevel = 0;
-
-        Double[] doubleArray=stringToDoubleArray(str);
+        Double[] doubleArray = stringToDoubleArray(str);
 
         //输入格式的校验
-        if (doubleArray.length != 8) {
-            System.out.println("输入参数格式错误，字符中应包含8个和符合度有关的数字，然而实际输入中数字数目为 " + doubleArray.length);
+        if (doubleArray.length != 8 && doubleArray.length != 9) {
+            System.out.println("输入参数格式错误，字符中应包含8或9个数字，然而实际输入中数字数目为 " + doubleArray.length);
             return str;
         }
 
+        StringBuffer stringBuffer = new StringBuffer();
+
         //计算指标等级
         for (int i = 0; i < 4; i++) {
+            stringBuffer.append(doubleArray[2 * i]).append(",").append(doubleArray[2 * i + 1]).append(",");
             if (conformity(doubleArray[2 * i], doubleArray[2 * i + 1])) {
                 indexLevel++;
                 continue;
@@ -51,7 +53,7 @@ public class CountIndexLevel {
             break;
         }
         System.out.println("指标项等级为：" + indexLevel);
-        return str + "," + indexLevel;
+        return stringBuffer.toString() + indexLevel;
     }
 
     //计算testResult所有的index等级

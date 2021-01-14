@@ -147,7 +147,7 @@ public class ConvertList {
     }
 
     //把groupLevel的23个结果存储到到list中
-    public static List<String> convertGroupLevel(GroupLevel groupLevel){
+    public static List<String> convertGroupLevel(GroupLevel groupLevel) {
         List<String> list = new ArrayList<>();
         //1.边界防护
         list.add(groupLevel.getPerimetersecurity());
@@ -199,23 +199,32 @@ public class ConvertList {
     }
 
     // 把字符串字符转换为double[]
-    public static Double[] stringToDoubleArray(String str){
+    public static Double[] stringToDoubleArray(String str) {
         String[] strArray = str.split(",");
         Double[] doubleArray = new Double[strArray.length];
-        System.out.println("字符串数组的长度为" + strArray.length);
         for (int i = 0; i < strArray.length; i++) {
-            doubleArray[i] = Double.parseDouble(strArray[i]);
+            //?:0或1个, *:0或多个, +:1或多个
+            if (strArray[i].matches("-?\\d+\\.?\\d*")) doubleArray[i] = Double.parseDouble(strArray[i]);
+            else {
+                System.out.println("stringToDoubleArray第" + i + "个字符串非数字,-99.9");
+                doubleArray[i] = -99.9;
+            }
         }
         return doubleArray;
     }
 
     // 把字符串字符转换为List<double>
-    public static List<Double> stringToDoubleList(String str){
+    public static List<Double> stringToDoubleList(String str) {
         String[] strArray = str.split(",");
-        List<Double> doubleList=new ArrayList<>();
-        for (String s : strArray) {
-            doubleList.add(Double.parseDouble(s));
+        List<Double> doubleList = new ArrayList<>();
+        for (int i = 0; i < strArray.length; i++) {
+            if (strArray[i].matches("-?\\d+\\.?\\d*")) doubleList.add(Double.parseDouble(strArray[i]));
+            else {
+                System.out.println("stringToDoubleList" + i + "个字符串非数字,-99.9");
+                doubleList.add(-99.9);
+            }
         }
+        System.out.println("字符串转化为double List，List大小为" + doubleList.size());
         return doubleList;
     }
 
