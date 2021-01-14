@@ -60,7 +60,7 @@ public class TestResultController extends BaseController {
     }
 
     @PostMapping({"add"})
-    public ResponseBo addTestResult(@Valid TestResult testResult) {
+    public ResponseBo addTestResult(@Valid @RequestBody TestResult testResult) {
         CountIndexLevel.countTestResult(testResult);
         if (this.testResultService.createTestResult(testResult) & this.groupLevelService.createGroupLevel(setGroupLevel(testResult))) {
             return ResponseBo.ok();

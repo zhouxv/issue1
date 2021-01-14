@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0dcfef"],{8001:function(e,n,t){"use strict";t.r(n);var a=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("d2-container",[t("template",{slot:"header"},[e._v("账户信息查看")])],2)},c=[],o={name:"monitor-accountmanagement-index1"},l=o,r=t("c701"),u=Object(r["a"])(l,a,c,!1,null,null,null);n["default"]=u.exports}}]);
+//# sourceMappingURL=chunk-2d0dcfef.e06a19da.js.map

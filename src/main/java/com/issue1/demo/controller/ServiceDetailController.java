@@ -47,7 +47,7 @@ public class ServiceDetailController extends BaseController {
 
 
     @PostMapping({"add"})
-    public ResponseBo addServiceDetail(@Valid ServiceDetail serviceDetail) {
+    public ResponseBo addServiceDetail(@Valid @RequestBody ServiceDetail serviceDetail) {
         if (this.serviceDetailService.createServiceDetail(serviceDetail)) {
             return ResponseBo.ok();
         } else {
