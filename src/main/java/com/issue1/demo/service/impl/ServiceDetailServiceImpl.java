@@ -49,6 +49,7 @@ public class ServiceDetailServiceImpl extends ServiceImpl<ServiceDetailMapper, S
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean createServiceDetail(ServiceDetail serviceDetail) {
+        serviceDetail.setDeletestate(1);
         return this.save(serviceDetail);
     }
 

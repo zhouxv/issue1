@@ -14,7 +14,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller
@@ -69,9 +71,12 @@ public class ServiceController extends BaseController {
 
 
     @PostMapping({"add"})
-    public ResponseBo addService(@Valid Service service) {
+    public ResponseBo addService(@Valid @RequestBody Service service) {
+        System.out.println(service.getServicename());
         if (this.serviceService.createService(service)) {
-            return ResponseBo.ok();
+            Map<String,Integer> map=new HashMap<>();
+            map.put("serviceid",service.getServiceid());
+            return ResponseBo.ok(map);
         } else {
             return ResponseBo.fail();
         }
