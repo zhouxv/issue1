@@ -126,12 +126,11 @@ public class TestResultController extends BaseController {
 
 
     @PostMapping({"update"})
-    public ResponseBo updateTestResult(TestResult testResult) {
-        if (this.testResultService.updateTestResult(testResult)) {
+    public ResponseBo updateTestResult(@RequestBody TestResult testResult) {
+        if (this.testResultService.updateTestResultById(testResult)) {
             return ResponseBo.ok();
         } else {
             return ResponseBo.fail();
         }
     }
-
 }

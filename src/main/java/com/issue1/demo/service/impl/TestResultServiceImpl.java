@@ -61,6 +61,12 @@ public class TestResultServiceImpl extends ServiceImpl<TestResultMapper, TestRes
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean updateTestResultById(TestResult testResult) {
+        return this.updateById(testResult);
+    }
+
+    @Override
     public Boolean deleteTestResultById(Integer integer) {
         TestResult testResult=new TestResult();
         testResult.setDeletestate(0);

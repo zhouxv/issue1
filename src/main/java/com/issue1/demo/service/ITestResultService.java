@@ -45,6 +45,7 @@ public interface ITestResultService extends IService<TestResult> {
      */
     Boolean updateTestResult(TestResult testResult);
 
+    Boolean updateTestResultById(TestResult testResult);
     /**
      * 删除
      *
