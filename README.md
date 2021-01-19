@@ -35,3 +35,6 @@
 + 前端文件导入src/main/resources/static
 + controller中TestResult和ServiceDetail增加了@RequestBody注解
 + 端口10080
+
+#### 2021.01.19 提交
++ 前端更新

@@ -207,7 +207,7 @@ public class CountGroupLevel {
     public static String sample(List<String> listGroupLevel, double[] weightArray, List<Double> levelList1, List<Double> levelList2, List<Double> levelList3, List<Double> levelList4, int start, int length) {
         for (int i = start; i < start+length; i++) {
             List<Double> list = stringToDoubleList(listGroupLevel.get(i));
-            System.out.println("第" + i + "个指标有" + list.size() + "个数据");
+//            System.out.println("第" + i + "个指标有" + list.size() + "个数据");
             levelList1.add(list.get(0) / list.get(1));
             levelList2.add(list.get(2) / list.get(3));
             levelList3.add(list.get(4) / list.get(5));

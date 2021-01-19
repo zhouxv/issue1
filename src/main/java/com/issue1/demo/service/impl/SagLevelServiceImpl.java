@@ -51,6 +51,7 @@ public class SagLevelServiceImpl extends ServiceImpl<SagLevelMapper, SagLevel> i
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean createSagLevel(SagLevel sagLevel) {
+        sagLevel.setDeletestate(1);
         return this.save(sagLevel);
     }
 

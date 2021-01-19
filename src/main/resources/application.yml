@@ -73,7 +73,6 @@ spring:
       filter:
         stat:
           log-slow-sql: true
-
 mybatis-plus:
   mapper-locations: classpath:mapper/*/*.xml
   # 可直接在xml中写类型别名取代全限定名

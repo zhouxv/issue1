@@ -52,6 +52,7 @@ public class GroupLevelServiceImpl extends ServiceImpl<GroupLevelMapper, GroupLe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean createGroupLevel(GroupLevel groupLevel) {
+        groupLevel.setDeletestate(1);
         return this.save(groupLevel);
     }
 

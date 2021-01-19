@@ -35,6 +35,12 @@ public class Service {
     private Integer deletestate;
 
     /**
+     * 测评状态
+     */
+    @TableField("state")
+    private Integer state;
+
+    /**
      * 服务的参评公司
      */
     @TableField("serviceCompany")

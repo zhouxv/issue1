@@ -31,6 +31,7 @@ public class DTO {
           map.put("A类",new SagLevelDto("A类","边界防护, 身份鉴别, 入侵防范, 监控与检测, 恶意代码防范, 个人数据恢复, 事件预警和处置", sagLevel.getAresult()));
           map.put("G类",new SagLevelDto("G类","安全审计与验证,机构配置管理,剩余信息保护,安全策略,管理制度,安全日志,流程管理,服务协议", sagLevel.getGresult()));
           map.put("综合等级",sagLevel.getLevel());
+          map.put("deletestate",sagLevel.getDeletestate());
           return map;
      }
 
@@ -55,6 +56,7 @@ public class DTO {
           map.put("grouplevelid", groupLevel.getGrouplevelid().toString());
           map.put("serviceid",groupLevel.getServiceid().toString());
           map.put("23个分类得分的list",groupLevelDtoList);
+          map.put("deletestate",groupLevel.getDeletestate());
           return map;
      }
 }

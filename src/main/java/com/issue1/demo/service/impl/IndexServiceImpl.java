@@ -26,7 +26,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class IIndexServiceImpl extends ServiceImpl<IndexMapper, Index> implements IIndexService {
+public class IndexServiceImpl extends ServiceImpl<IndexMapper, Index> implements IIndexService {
 
     private final IndexMapper groupLevelMapper;
 

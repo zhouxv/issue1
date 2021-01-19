@@ -224,7 +224,7 @@ public class ConvertList {
                 doubleList.add(-99.9);
             }
         }
-        System.out.println("字符串转化为double List，List大小为" + doubleList.size());
+//        System.out.println("字符串转化为double List，List大小为" + doubleList.size());
         return doubleList;
     }
 

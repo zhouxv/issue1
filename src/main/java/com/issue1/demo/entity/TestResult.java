@@ -16,9 +16,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("test_result")
 public class TestResult {
 
-    /**
-     * 
-     */
+
     @TableId(value = "testResultId", type = IdType.AUTO)
     private Integer testresultid;
 

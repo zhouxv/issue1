@@ -50,6 +50,7 @@ public class TestResultServiceImpl extends ServiceImpl<TestResultMapper, TestRes
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean createTestResult(TestResult testResult) {
+        testResult.setDeletestate(1);
         return this.save(testResult);
     }
 

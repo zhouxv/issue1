@@ -49,6 +49,7 @@ public class ServiceServiceImpl extends ServiceImpl<ServiceMapper, Service> impl
     @Transactional(rollbackFor = Exception.class)
     public Boolean createService(Service service) {
         service.setDeletestate(1);
+        service.setState(1);
         return this.save(service);
     }
 

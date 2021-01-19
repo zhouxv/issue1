@@ -98,11 +98,11 @@ public class CountSagLevel {
     }
 
     /**
-     根据权重和某个等级上安全族的得分，算出当前等级S/A/G的得分
-
-     @param doubleList  List<Double> 某等级所有指标得分的list
-     @param weightArray double[] 对应指标的权重数组
-     @return double 得分
+     * 根据权重和某个等级上安全族的得分，算出当前等级S/A/G的得分
+     *
+     * @param doubleList  List<Double> 某等级所有指标得分的list
+     * @param weightArray double[] 对应指标的权重数组
+     * @return double 得分
      */
     public static Double oneSagLevel(List<Double> doubleList, double[] weightArray) {
         double scoreSum = 0;
@@ -115,9 +115,10 @@ public class CountSagLevel {
     }
 
     /**
-     根据S/A/G类的四个等级上的得分,得到对应的等级
-     @param doubles Double[] 四个等级的得分
-     @return String 等级
+     * 根据S/A/G类的四个等级上的得分,得到对应的等级
+     *
+     * @param doubles Double[] 四个等级的得分
+     * @return String 等级
      */
     public static String sagLevel(Double[] doubles) {
         int level = 0;
@@ -132,12 +133,12 @@ public class CountSagLevel {
     }
 
     /**
-     根据四个等级上的SAG得分计算其等级
-
-     @param s String S类四个等级的得分和最终等级
-     @param a String A类四个等级的得分和最终等级
-     @param g String G类四个等级的得分和最终等级
-     @return String 最终等级
+     * 根据四个等级上的SAG得分计算其等级
+     *
+     * @param s String S类四个等级的得分和最终等级
+     * @param a String A类四个等级的得分和最终等级
+     * @param g String G类四个等级的得分和最终等级
+     * @return String 最终等级
      */
     public static String countFinalLevel(String s, String a, String g) {
         List<Double> sDoubleList = stringToDoubleList(s);
@@ -146,10 +147,11 @@ public class CountSagLevel {
         if (sDoubleList.size() != 5 & aDoubleList.size() != 5 & gDoubleList.size() != 5) return "sag类数据格式错误";
         Double sum = sDoubleList.get(sDoubleList.size() - 1) + aDoubleList.get(aDoubleList.size() - 1) + gDoubleList.get(gDoubleList.size() - 1);
         System.out.println("sum=" + sum);
+        if (sum < 3 & sum >= 0) return "未达到最低等级";
         if (sum == 3) return "基础定义级";
         if (sum > 3 & sum <= 6) return "增强控制级";
         if (sum > 6 & sum <= 9) return "持续优化级";
         if (sum > 9 & sum <= 12) return "量化完善级";
-        return "sag类数据内容错误";
+        return "未知等级";
     }
 }
