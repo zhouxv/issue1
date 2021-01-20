@@ -1,22 +1,18 @@
 package com.issue1.demo.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.issue1.demo.entity.ServiceDetail;
-import com.issue1.demo.entity.TestResult;
-import com.issue1.dependence.common.entity.QueryRequest;
-import com.issue1.demo.entity.SagLevel;
-import com.issue1.demo.mapper.SagLevelMapper;
-import com.issue1.demo.service.ISagLevelService;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-import lombok.RequiredArgsConstructor;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.issue1.demo.entity.SagLevel;
+import com.issue1.demo.mapper.SagLevelMapper;
+import com.issue1.demo.service.ISagLevelService;
+import com.issue1.dependence.common.entity.QueryRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -62,14 +58,21 @@ public class SagLevelServiceImpl extends ServiceImpl<SagLevelMapper, SagLevel> i
     }
 
     @Override
+    public Boolean updateSagLevelByServiceId(SagLevel sagLevel) {
+        LambdaUpdateWrapper<SagLevel> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SagLevel::getServiceid, sagLevel.getServiceid());
+        return this.update(sagLevel, wrapper);
+    }
+
+    @Override
     public Boolean deleteSagLevelById(Integer integer) {
-        SagLevel sagLevel=new SagLevel();
+        SagLevel sagLevel = new SagLevel();
         sagLevel.setDeletestate(0);
 
         LambdaUpdateWrapper<SagLevel> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(SagLevel::getServiceid,integer);
+        wrapper.eq(SagLevel::getServiceid, integer);
 
-        return this.update(sagLevel,wrapper);
+        return this.update(sagLevel, wrapper);
     }
 
     @Override

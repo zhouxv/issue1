@@ -1,23 +1,18 @@
 package com.issue1.demo.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.issue1.demo.entity.SagLevel;
-import com.issue1.demo.entity.ServiceDetail;
-import com.issue1.demo.entity.TestResult;
-import com.issue1.dependence.common.entity.QueryRequest;
-import com.issue1.demo.entity.GroupLevel;
-import com.issue1.demo.mapper.GroupLevelMapper;
-import com.issue1.demo.service.IGroupLevelService;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-import lombok.RequiredArgsConstructor;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.issue1.demo.entity.GroupLevel;
+import com.issue1.demo.mapper.GroupLevelMapper;
+import com.issue1.demo.service.IGroupLevelService;
+import com.issue1.dependence.common.entity.QueryRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -63,14 +58,21 @@ public class GroupLevelServiceImpl extends ServiceImpl<GroupLevelMapper, GroupLe
     }
 
     @Override
+    public Boolean updateGroupLevelByServiceId(GroupLevel groupLevel) {
+        LambdaUpdateWrapper<GroupLevel> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(GroupLevel::getServiceid, groupLevel.getServiceid());
+        return this.update(groupLevel, wrapper);
+    }
+
+    @Override
     public Boolean deleteGroupLevelById(Integer integer) {
-        GroupLevel groupLevel=new GroupLevel();
+        GroupLevel groupLevel = new GroupLevel();
         groupLevel.setDeletestate(0);
 
         LambdaUpdateWrapper<GroupLevel> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(GroupLevel::getServiceid,integer);
+        wrapper.eq(GroupLevel::getServiceid, integer);
 
-        return this.update(groupLevel,wrapper);
+        return this.update(groupLevel, wrapper);
     }
 
     @Override

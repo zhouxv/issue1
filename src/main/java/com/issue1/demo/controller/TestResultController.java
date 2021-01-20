@@ -3,29 +3,24 @@ package com.issue1.demo.controller;
 import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.entity.SagLevel;
 import com.issue1.demo.entity.Service;
+import com.issue1.demo.entity.TestResult;
 import com.issue1.demo.service.IGroupLevelService;
 import com.issue1.demo.service.ISagLevelService;
 import com.issue1.demo.service.IServiceService;
+import com.issue1.demo.service.ITestResultService;
 import com.issue1.demo.util.CountIndexLevel;
 import com.issue1.demo.util.CountSagLevel;
 import com.issue1.dependence.common.controller.BaseController;
-import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.dependence.common.entity.ResponseBo;
-import com.issue1.demo.entity.TestResult;
-import com.issue1.demo.service.ITestResultService;
-
 import lombok.extern.slf4j.Slf4j;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.acl.Group;
 import java.util.List;
 
 import static com.issue1.demo.util.CountGroupLevel.setGroupLevel;
-import static com.issue1.demo.util.CountSagLevel.setSagLevel;
 
 /**
  * Controller
@@ -104,7 +99,6 @@ public class TestResultController extends BaseController {
             else {
                 return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult添加成功,groupLevel添加失败");
             }
-
 
         }
         else {

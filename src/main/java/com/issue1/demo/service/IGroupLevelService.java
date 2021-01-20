@@ -1,10 +1,9 @@
 package com.issue1.demo.service;
 
-import com.issue1.demo.entity.GroupLevel;
-import com.issue1.dependence.common.entity.QueryRequest;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.issue1.demo.entity.GroupLevel;
+import com.issue1.dependence.common.entity.QueryRequest;
 
 import java.util.List;
 
@@ -39,16 +38,18 @@ public interface IGroupLevelService extends IService<GroupLevel> {
     Boolean createGroupLevel(GroupLevel groupLevel);
 
     /**
-     * 修改
-     *
-     * @param groupLevel groupLevel
+     修改
+
+     @param groupLevel groupLevel
      */
     Boolean updateGroupLevel(GroupLevel groupLevel);
 
+    Boolean updateGroupLevelByServiceId(GroupLevel groupLevel);
+
     /**
-     * 删除
-     *
-     * @param groupLevel groupLevel
+     删除
+
+     @param groupLevel groupLevel
      */
     Boolean deleteGroupLevel(GroupLevel groupLevel);
 

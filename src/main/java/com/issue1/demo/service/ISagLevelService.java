@@ -1,10 +1,9 @@
 package com.issue1.demo.service;
 
-import com.issue1.demo.entity.SagLevel;
-import com.issue1.dependence.common.entity.QueryRequest;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.issue1.demo.entity.SagLevel;
+import com.issue1.dependence.common.entity.QueryRequest;
 
 import java.util.List;
 
@@ -39,16 +38,18 @@ public interface ISagLevelService extends IService<SagLevel> {
     Boolean createSagLevel(SagLevel sagLevel);
 
     /**
-     * 修改
-     *
-     * @param sagLevel sagLevel
+     修改
+
+     @param sagLevel sagLevel
      */
     Boolean updateSagLevel(SagLevel sagLevel);
 
+    Boolean updateSagLevelByServiceId(SagLevel sagLevel);
+
     /**
-     * 删除
-     *
-     * @param sagLevel sagLevel
+     删除
+
+     @param sagLevel sagLevel
      */
     Boolean deleteSagLevel(SagLevel sagLevel);
 
