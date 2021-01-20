@@ -6,6 +6,7 @@ import com.issue1.demo.entity.SagLevel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.issue1.demo.util.ConvertList.formatDouble;
 import static com.issue1.demo.util.ConvertList.stringToDoubleList;
 
 
@@ -111,7 +112,7 @@ public class CountSagLevel {
             scoreSum = scoreSum + doubleList.get(i) * weightArray[i];
             weightSum = weightSum + weightArray[i];
         }
-        return scoreSum / weightSum;
+        return formatDouble(scoreSum / weightSum);
     }
 
     /**
@@ -123,7 +124,7 @@ public class CountSagLevel {
     public static String sagLevel(Double[] doubles) {
         int level = 0;
         for (Double aDouble : doubles) {
-            if (aDouble > 0.9) {
+            if (aDouble > 0.8) {
                 level++;
                 continue;
             }

@@ -9,9 +9,7 @@ import com.issue1.demo.entity.GroupLevel;
 
 /*
 转换类，把过多的变量的值存储到List中，方便处理
- */
-import static com.issue1.demo.util.ConvertList.convertTestResult;
-import static com.issue1.demo.util.ConvertList.stringToDoubleList;
+ */import static com.issue1.demo.util.ConvertList.*;
 
 
 public class CountGroupLevel {
@@ -255,6 +253,6 @@ public class CountGroupLevel {
             scoreSum = scoreSum + doubleList.get(i) * weightArray[i];
             weightSum = weightSum + weightArray[i];
         }
-        return scoreSum / weightSum;
+        return formatDouble(scoreSum / weightSum);
     }
 }

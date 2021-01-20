@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.issue1.demo.util.CountGroupLevel.setGroupLevel;
@@ -129,18 +130,110 @@ public class TestResultController extends BaseController {
         if (this.testResultService.updateTestResultById(testResult)) {
             service.setState(2);
             this.serviceService.updateService(service);
-
+            System.out.println(groupLevel);
             if (this.groupLevelService.updateGroupLevelByServiceId(groupLevel)) {
 
                 service.setState(3);
                 this.serviceService.updateService(service);
 
-                if(this.sagLevelService.updateSagLevelByServiceId(sagLevel)){
+                if (this.sagLevelService.updateSagLevelByServiceId(sagLevel)) {
                     service.setState(4);
                     service.setServicelevel(sagLevel.getLevel());
                     this.serviceService.updateService(service);
                     return ResponseBo.ok("全部数据更新完毕");
-                }else {
+                } else {
+                    return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult更新成功,groupLevel更新成功,sagLevel更新失败");
+                }
+            } else {
+                return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult更新成功,groupLevel更新失败");
+            }
+        } else {
+            return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult更新失败");
+        }
+    }
+
+    @PostMapping({"updateByServiceId"})
+    public ResponseBo updateTestResultByServiceId(Integer serviceId) {
+        if (serviceId == null) return ResponseBo.fail("serviceid字段不能为空");
+
+        TestResult testResult1 = new TestResult();
+        testResult1.setServiceid(serviceId);
+
+        List<TestResult> testResultList = this.testResultService.findTestResults(testResult1);
+        if (testResultList.isEmpty()) return ResponseBo.ok("没有找到ServiceId为" + testResult1.getServiceid() + "的记录");
+
+        TestResult testResult = testResultList.get(0);
+
+        CountIndexLevel.countTestResult(testResult);
+        GroupLevel groupLevel = setGroupLevel(testResult);
+        SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
+
+        Service service = new Service();
+        service.setServiceid(testResult.getServiceid());
+
+        if (this.testResultService.updateTestResultById(testResult)) {
+            service.setState(2);
+            this.serviceService.updateService(service);
+            System.out.println(groupLevel);
+            if (this.groupLevelService.updateGroupLevelByServiceId(groupLevel)) {
+
+                service.setState(3);
+                this.serviceService.updateService(service);
+
+                if (this.sagLevelService.updateSagLevelByServiceId(sagLevel)) {
+                    service.setState(4);
+                    service.setServicelevel(sagLevel.getLevel());
+                    this.serviceService.updateService(service);
+                    return ResponseBo.ok("全部数据更新完毕");
+                } else {
+                    return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult更新成功,groupLevel更新成功,sagLevel更新失败");
+                }
+            } else {
+                return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult更新成功,groupLevel更新失败");
+            }
+        } else {
+            return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult更新失败");
+        }
+    }
+
+    @PostMapping({"updateAll"})
+    public List<ResponseBo> updateAllTestResult(TestResult testResult) {
+        List<ResponseBo> list=new ArrayList<>();
+        List<TestResult> testResultList = this.testResultService.findTestResults(testResult);
+        if (testResultList.isEmpty()) {
+            list.add(ResponseBo.ok("没有找到的记录"));
+            return list;
+        }
+        for (int i = 0; i < testResultList.size(); i++) {
+            list.add(this.update(testResultList.get(i),this.serviceService,this.testResultService,this.groupLevelService,this.sagLevelService));
+        }
+        return list;
+    }
+
+
+    public static ResponseBo update(TestResult testResult, IServiceService serviceService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
+        CountIndexLevel.countTestResult(testResult);
+        GroupLevel groupLevel = setGroupLevel(testResult);
+        SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
+
+        Service service = new Service();
+        service.setServiceid(testResult.getServiceid());
+
+        if (testResultService.updateTestResultById(testResult)) {
+            service.setState(2);
+            serviceService.updateService(service);
+            System.out.println(groupLevel);
+            if (groupLevelService.updateGroupLevelByServiceId(groupLevel)) {
+
+                service.setState(3);
+                serviceService.updateService(service);
+
+                if (sagLevelService.updateSagLevelByServiceId(sagLevel)) {
+                    service.setState(4);
+                    service.setServicelevel(sagLevel.getLevel());
+                    serviceService.updateService(service);
+                    return ResponseBo.ok("全部数据更新完毕");
+                } else {
                     return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult更新成功,groupLevel更新成功,sagLevel更新失败");
                 }
             } else {

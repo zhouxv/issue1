@@ -3,6 +3,8 @@ package com.issue1.demo.util;
 import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.entity.TestResult;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -228,5 +230,10 @@ public class ConvertList {
         return doubleList;
     }
 
+    public static double formatDouble(double d) {
+        // 新方法，如果不需要四舍五入，可以使用RoundingMode.DOWN
+        BigDecimal bg = new BigDecimal(d).setScale(2, RoundingMode.UP);
+        return bg.doubleValue();
+    }
 
 }
