@@ -63,9 +63,9 @@ public class TestResultController extends BaseController {
 
     @PostMapping({"add"})
     public ResponseBo addTestResult(@Valid @RequestBody TestResult testResult) {
-        if(testResult.getServiceid()==null) return ResponseBo.fail("serviceid字段不能为空");
+        if (testResult.getServiceid() == null) return ResponseBo.fail("serviceid字段不能为空");
         CountIndexLevel.countTestResult(testResult);
-        Service service=new Service();
+        Service service = new Service();
         service.setServiceid(testResult.getServiceid());
         if (this.testResultService.createTestResult(testResult)) {
             System.out.println("serviceId:" + testResult.getServiceid() + ",testResult添加成功");
@@ -73,35 +73,32 @@ public class TestResultController extends BaseController {
             service.setState(2);
             this.serviceService.updateService(service);
 
-            GroupLevel groupLevel=setGroupLevel(testResult);
+            GroupLevel groupLevel = setGroupLevel(testResult);
 
             if (this.groupLevelService.createGroupLevel(groupLevel)) {
                 System.out.println("serviceId:" + groupLevel.getServiceid() + ",groupLevel添加成功");
                 service.setState(3);
                 this.serviceService.updateService(service);
 
-                SagLevel sagLevel= CountSagLevel.setSagLevel(groupLevel);
+                SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
 
                 if (this.sagLevelService.createSagLevel(sagLevel)) {
                     System.out.println("serviceId:" + sagLevel.getServiceid() + ",sagLevel");
 
-                    service.setState(3);
+                    service.setState(4);
                     service.setServicelevel(sagLevel.getLevel());
                     this.serviceService.updateService(service);
 
                     return ResponseBo.ok("全部数据已正确添加");
-                }
-                else{
+                } else {
                     return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult添加成功,groupLevel添加成功,sagLevel添加失败");
                 }
 
-            }
-            else {
+            } else {
                 return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult添加成功,groupLevel添加失败");
             }
 
-        }
-        else {
+        } else {
             return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult添加失败");
         }
 
@@ -121,10 +118,36 @@ public class TestResultController extends BaseController {
 
     @PostMapping({"update"})
     public ResponseBo updateTestResult(@RequestBody TestResult testResult) {
+        if (testResult.getServiceid() == null) return ResponseBo.fail("serviceid字段不能为空");
+        CountIndexLevel.countTestResult(testResult);
+        GroupLevel groupLevel = setGroupLevel(testResult);
+        SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
+
+        Service service = new Service();
+        service.setServiceid(testResult.getServiceid());
+
         if (this.testResultService.updateTestResultById(testResult)) {
-            return ResponseBo.ok();
+            service.setState(2);
+            this.serviceService.updateService(service);
+
+            if (this.groupLevelService.updateGroupLevelByServiceId(groupLevel)) {
+
+                service.setState(3);
+                this.serviceService.updateService(service);
+
+                if(this.sagLevelService.updateSagLevelByServiceId(sagLevel)){
+                    service.setState(4);
+                    service.setServicelevel(sagLevel.getLevel());
+                    this.serviceService.updateService(service);
+                    return ResponseBo.ok("全部数据更新完毕");
+                }else {
+                    return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult更新成功,groupLevel更新成功,sagLevel更新失败");
+                }
+            } else {
+                return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult更新成功,groupLevel更新失败");
+            }
         } else {
-            return ResponseBo.fail();
+            return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult更新失败");
         }
     }
 }
