@@ -1,11 +1,14 @@
 package com.issue1.demo.entity;
 
 
-import lombok.Data;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  *  Entity
@@ -25,7 +28,9 @@ public class ServiceDetail {
     /**
      * 服务详情的Id
      */
+    @Valid
     @TableField("serviceId")
+    @NotNull(message = "serviceid不能为null")
     private Integer serviceid;
 
     /**

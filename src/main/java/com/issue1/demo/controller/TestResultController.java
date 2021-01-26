@@ -10,18 +10,18 @@ import com.issue1.demo.service.IServiceService;
 import com.issue1.demo.service.ITestResultService;
 import com.issue1.demo.util.CountIndexLevel;
 import com.issue1.demo.util.CountSagLevel;
+import com.issue1.demo.util.FormatCheckResult;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.ResponseBo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.issue1.demo.util.CountGroupLevel.setGroupLevel;
+import static com.issue1.demo.util.FormatCheck.testResultFormatCheck;
 
 /**
  * Controller
@@ -33,18 +33,17 @@ import static com.issue1.demo.util.CountGroupLevel.setGroupLevel;
 @RestController
 @RequestMapping({"testResult"})
 public class TestResultController extends BaseController {
+    private final IServiceService serviceService;
+    private final ITestResultService testResultService;
+    private final IGroupLevelService groupLevelService;
+    private final ISagLevelService sagLevelService;
 
-    @Autowired
-    private IServiceService serviceService;
-
-    @Autowired
-    private ITestResultService testResultService;
-
-    @Autowired
-    private IGroupLevelService groupLevelService;
-
-    @Autowired
-    private ISagLevelService sagLevelService;
+    public TestResultController(IServiceService serviceService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
+        this.serviceService = serviceService;
+        this.testResultService = testResultService;
+        this.groupLevelService = groupLevelService;
+        this.sagLevelService = sagLevelService;
+    }
 
     /**
      * 如果你是使用的模版引擎进行渲染视图则可以生成这个返回视图,并用@Controller类前的注解@RestController换掉,后面返回json的方法记得也加上@ResponseBody
@@ -65,9 +64,16 @@ public class TestResultController extends BaseController {
     @PostMapping({"add"})
     public ResponseBo addTestResult(@Valid @RequestBody TestResult testResult) {
         if (testResult.getServiceid() == null) return ResponseBo.fail("serviceid字段不能为空");
+
+        FormatCheckResult result = testResultFormatCheck(testResult);
+        if (result.isError()) {
+            return ResponseBo.fail(result.getErrorString());
+        }
+
         CountIndexLevel.countTestResult(testResult);
         Service service = new Service();
         service.setServiceid(testResult.getServiceid());
+
         if (this.testResultService.createTestResult(testResult)) {
             System.out.println("serviceId:" + testResult.getServiceid() + ",testResult添加成功");
 
@@ -120,98 +126,77 @@ public class TestResultController extends BaseController {
     @PostMapping({"update"})
     public ResponseBo updateTestResult(@RequestBody TestResult testResult) {
         if (testResult.getServiceid() == null) return ResponseBo.fail("serviceid字段不能为空");
-        CountIndexLevel.countTestResult(testResult);
-        GroupLevel groupLevel = setGroupLevel(testResult);
-        SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
 
-        Service service = new Service();
-        service.setServiceid(testResult.getServiceid());
-
-        if (this.testResultService.updateTestResultById(testResult)) {
-            service.setState(2);
-            this.serviceService.updateService(service);
-            System.out.println(groupLevel);
-            if (this.groupLevelService.updateGroupLevelByServiceId(groupLevel)) {
-
-                service.setState(3);
-                this.serviceService.updateService(service);
-
-                if (this.sagLevelService.updateSagLevelByServiceId(sagLevel)) {
-                    service.setState(4);
-                    service.setServicelevel(sagLevel.getLevel());
-                    this.serviceService.updateService(service);
-                    return ResponseBo.ok("全部数据更新完毕");
-                } else {
-                    return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult更新成功,groupLevel更新成功,sagLevel更新失败");
-                }
-            } else {
-                return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult更新成功,groupLevel更新失败");
-            }
-        } else {
-            return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult更新失败");
+        FormatCheckResult result = testResultFormatCheck(testResult);
+        if (result.isError()) {
+            System.out.println(result.getErrorString());
+            return ResponseBo.fail(result.getErrorString());
         }
+
+        return this.update(testResult, this.serviceService, this.testResultService, this.groupLevelService, this.sagLevelService);
     }
 
-    @PostMapping({"updateByServiceId"})
-    public ResponseBo updateTestResultByServiceId(Integer serviceId) {
-        if (serviceId == null) return ResponseBo.fail("serviceid字段不能为空");
+//    @PostMapping({"updateByServiceId"})
+//    public ResponseBo updateTestResultByServiceId(Integer serviceId) {
+//        if (serviceId == null) return ResponseBo.fail("serviceid字段不能为空");
+//
+//        TestResult testResult1 = new TestResult();
+//        testResult1.setServiceid(serviceId);
+//
+//        List<TestResult> testResultList = this.testResultService.findTestResults(testResult1);
+//        if (testResultList.isEmpty()) return ResponseBo.ok("没有找到ServiceId为" + testResult1.getServiceid() + "的记录");
+//
+//        TestResult testResult = testResultList.get(0);
+//
+//        CountIndexLevel.countTestResult(testResult);
+//        GroupLevel groupLevel = setGroupLevel(testResult);
+//        SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
+//
+//        Service service = new Service();
+//        service.setServiceid(testResult.getServiceid());
+//
+//        if (this.testResultService.updateTestResultById(testResult)) {
+//            service.setState(2);
+//            this.serviceService.updateService(service);
+//            System.out.println(groupLevel);
+//            if (this.groupLevelService.updateGroupLevelByServiceId(groupLevel)) {
+//
+//                service.setState(3);
+//                this.serviceService.updateService(service);
+//
+//                if (this.sagLevelService.updateSagLevelByServiceId(sagLevel)) {
+//                    service.setState(4);
+//                    service.setServicelevel(sagLevel.getLevel());
+//                    this.serviceService.updateService(service);
+//                    return ResponseBo.ok("全部数据更新完毕");
+//                } else {
+//                    return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult更新成功,groupLevel更新成功,sagLevel更新失败");
+//                }
+//            } else {
+//                return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult更新成功,groupLevel更新失败");
+//            }
+//        } else {
+//            return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult更新失败");
+//        }
+//    }
+//
+//    @PostMapping({"updateAll"})
+//    public List<ResponseBo> updateAllTestResult(TestResult testResult) {
+//        List<ResponseBo> list=new ArrayList<>();
+//        List<TestResult> testResultList = this.testResultService.findTestResults(testResult);
+//        if (testResultList.isEmpty()) {
+//            list.add(ResponseBo.ok("没有找到的记录"));
+//            return list;
+//        }
+//
+//        for (TestResult result : testResultList) {
+//            list.add(this.update(result,this.serviceService,this.testResultService,this.groupLevelService,this.sagLevelService));
+//        }
+//        return list;
+//    }
 
-        TestResult testResult1 = new TestResult();
-        testResult1.setServiceid(serviceId);
 
-        List<TestResult> testResultList = this.testResultService.findTestResults(testResult1);
-        if (testResultList.isEmpty()) return ResponseBo.ok("没有找到ServiceId为" + testResult1.getServiceid() + "的记录");
-
-        TestResult testResult = testResultList.get(0);
-
-        CountIndexLevel.countTestResult(testResult);
-        GroupLevel groupLevel = setGroupLevel(testResult);
-        SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
-
-        Service service = new Service();
-        service.setServiceid(testResult.getServiceid());
-
-        if (this.testResultService.updateTestResultById(testResult)) {
-            service.setState(2);
-            this.serviceService.updateService(service);
-            System.out.println(groupLevel);
-            if (this.groupLevelService.updateGroupLevelByServiceId(groupLevel)) {
-
-                service.setState(3);
-                this.serviceService.updateService(service);
-
-                if (this.sagLevelService.updateSagLevelByServiceId(sagLevel)) {
-                    service.setState(4);
-                    service.setServicelevel(sagLevel.getLevel());
-                    this.serviceService.updateService(service);
-                    return ResponseBo.ok("全部数据更新完毕");
-                } else {
-                    return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult更新成功,groupLevel更新成功,sagLevel更新失败");
-                }
-            } else {
-                return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult更新成功,groupLevel更新失败");
-            }
-        } else {
-            return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult更新失败");
-        }
-    }
-
-    @PostMapping({"updateAll"})
-    public List<ResponseBo> updateAllTestResult(TestResult testResult) {
-        List<ResponseBo> list=new ArrayList<>();
-        List<TestResult> testResultList = this.testResultService.findTestResults(testResult);
-        if (testResultList.isEmpty()) {
-            list.add(ResponseBo.ok("没有找到的记录"));
-            return list;
-        }
-        for (int i = 0; i < testResultList.size(); i++) {
-            list.add(this.update(testResultList.get(i),this.serviceService,this.testResultService,this.groupLevelService,this.sagLevelService));
-        }
-        return list;
-    }
-
-
-    public static ResponseBo update(TestResult testResult, IServiceService serviceService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
+    public ResponseBo update(TestResult testResult, IServiceService serviceService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
         CountIndexLevel.countTestResult(testResult);
         GroupLevel groupLevel = setGroupLevel(testResult);
         SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);

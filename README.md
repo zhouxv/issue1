@@ -32,9 +32,17 @@
 + CountIndexLevel类中indexLevel()中,因为有updateTestResult的需求,数组大小的检验变为8或9;循环中不再使用'+',而是使用StringBuffer.
 
 #### 2021.01.14 提交
+
 + 前端文件导入src/main/resources/static
 + controller中TestResult和ServiceDetail增加了@RequestBody注解
 + 端口10080
 
 #### 2021.01.19 提交
+
 + 前端更新
+
+#### 2021.01.27 提交
+
++ 字段注入改为构造器注入
++ service和serviceDeta的@valid 注解
++ testResult格式校验

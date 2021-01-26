@@ -5,7 +5,6 @@ import com.issue1.demo.service.ISagLevelService;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.ResponseBo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +23,16 @@ import static com.issue1.demo.util.DTO.DtoListSagLevel;
 @RestController
 @RequestMapping({"sagLevel"})
 public class SagLevelController extends BaseController {
+    private final ISagLevelService sagLevelService;
 
-    @Autowired
-    private ISagLevelService sagLevelService;
+    public SagLevelController(ISagLevelService sagLevelService) {
+        this.sagLevelService = sagLevelService;
+    }
+
 
     /**
      * 如果你是使用的模版引擎进行渲染视图则可以生成这个返回视图,并用@Controller类前的注解@RestController换掉,后面返回json的方法记得也加上@ResponseBody
-     *
+     * <p>
      * public String sagLevelIndex(){
      * return "您的templates目录下的视图文件夹名/sagLevel/sagLevel";
      * }

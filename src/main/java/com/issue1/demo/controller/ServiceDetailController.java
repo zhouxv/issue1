@@ -1,14 +1,12 @@
 package com.issue1.demo.controller;
 
-import com.issue1.dependence.common.controller.BaseController;
-import com.issue1.dependence.common.entity.QueryRequest;
-import com.issue1.dependence.common.entity.ResponseBo;
 import com.issue1.demo.entity.ServiceDetail;
 import com.issue1.demo.service.IServiceDetailService;
-
+import com.issue1.dependence.common.controller.BaseController;
+import com.issue1.dependence.common.entity.ResponseBo;
 import lombok.extern.slf4j.Slf4j;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +24,16 @@ import java.util.List;
 @RequestMapping({"serviceDetail"})
 public class ServiceDetailController extends BaseController {
 
-    @Autowired
-    private IServiceDetailService serviceDetailService;
+    private final IServiceDetailService serviceDetailService;
+
+    public ServiceDetailController(IServiceDetailService serviceDetailService) {
+        this.serviceDetailService = serviceDetailService;
+    }
+
 
     /**
      * 如果你是使用的模版引擎进行渲染视图则可以生成这个返回视图,并用@Controller类前的注解@RestController换掉,后面返回json的方法记得也加上@ResponseBody
-     *
+     * <p>
      * public String serviceDetailIndex(){
      * return "您的templates目录下的视图文件夹名/serviceDetail/serviceDetail";
      * }
@@ -47,7 +49,16 @@ public class ServiceDetailController extends BaseController {
 
 
     @PostMapping({"add"})
-    public ResponseBo addServiceDetail(@Valid @RequestBody ServiceDetail serviceDetail) {
+    public ResponseBo addServiceDetail(@Valid @RequestBody ServiceDetail serviceDetail, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuffer stringBuffer = new StringBuffer();
+            for (ObjectError allError : bindingResult.getAllErrors()) {
+                stringBuffer.append(allError.getDefaultMessage()).append(";");
+            }
+            return ResponseBo.fail(stringBuffer.toString());
+        }
+
+
         if (this.serviceDetailService.createServiceDetail(serviceDetail)) {
             return ResponseBo.ok();
         } else {
@@ -55,13 +66,13 @@ public class ServiceDetailController extends BaseController {
         }
     }
 
-    @PostMapping({"update"})
-    public ResponseBo updateServiceDetail(ServiceDetail serviceDetail) {
-        if (this.serviceDetailService.updateServiceDetail(serviceDetail)) {
-            return ResponseBo.ok();
-        } else {
-            return ResponseBo.fail();
-        }
-    }
+//    @PostMapping({"update"})
+//    public ResponseBo updateServiceDetail(ServiceDetail serviceDetail) {
+//        if (this.serviceDetailService.updateServiceDetail(serviceDetail)) {
+//            return ResponseBo.ok();
+//        } else {
+//            return ResponseBo.fail();
+//        }
+//    }
 
 }

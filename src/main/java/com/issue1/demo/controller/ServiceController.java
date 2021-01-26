@@ -1,19 +1,15 @@
 package com.issue1.demo.controller;
 
-import com.issue1.demo.entity.ServiceDetail;
+import com.issue1.demo.entity.Service;
 import com.issue1.demo.service.*;
 import com.issue1.dependence.common.controller.BaseController;
-import com.issue1.dependence.common.entity.QueryRequest;
 import com.issue1.dependence.common.entity.ResponseBo;
-import com.issue1.demo.entity.Service;
-
 import lombok.extern.slf4j.Slf4j;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,21 +24,20 @@ import java.util.Map;
 @RestController
 @RequestMapping({"service"})
 public class ServiceController extends BaseController {
+    private final IServiceService serviceService;
+    private final IServiceDetailService serviceDetailService;
+    private final ITestResultService testResultService;
+    private final IGroupLevelService groupLevelService;
+    private final ISagLevelService sagLevelService;
 
-    @Autowired
-    private IServiceService serviceService;
+    public ServiceController(IServiceService serviceService, IServiceDetailService serviceDetailService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
+        this.serviceService = serviceService;
+        this.serviceDetailService = serviceDetailService;
+        this.testResultService = testResultService;
+        this.groupLevelService = groupLevelService;
+        this.sagLevelService = sagLevelService;
+    }
 
-    @Autowired
-    private IServiceDetailService serviceDetailService;
-
-    @Autowired
-    private ITestResultService testResultService;
-
-    @Autowired
-    private IGroupLevelService groupLevelService;
-
-    @Autowired
-    private ISagLevelService sagLevelService;
 
     /**
      * 如果你是使用的模版引擎进行渲染视图则可以生成这个返回视图,并用@Controller类前的注解@RestController换掉,后面返回json的方法记得也加上@ResponseBody
@@ -71,11 +66,18 @@ public class ServiceController extends BaseController {
 
 
     @PostMapping({"add"})
-    public ResponseBo addService(@Valid @RequestBody Service service) {
-        System.out.println(service.getServicename());
+    public ResponseBo addService(@Validated @RequestBody Service service, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuffer stringBuffer = new StringBuffer();
+            for (ObjectError allError : bindingResult.getAllErrors()) {
+                stringBuffer.append(allError.getDefaultMessage()).append(";");
+            }
+            return ResponseBo.fail(stringBuffer.toString());
+        }
+
         if (this.serviceService.createService(service)) {
-            Map<String,Integer> map=new HashMap<>();
-            map.put("serviceid",service.getServiceid());
+            Map<String, Integer> map = new HashMap<>();
+            map.put("serviceid", service.getServiceid());
             return ResponseBo.ok(map);
         } else {
             return ResponseBo.fail();
@@ -90,43 +92,43 @@ public class ServiceController extends BaseController {
 
         if (serviceService.deleteServiceById(serviceId)) {
             System.out.println("Service deleteState=0 操作成功");
-        }else{
+        } else {
             ResponseBo.fail("Service deleteState=0 操作失败");
         }
 
         if (serviceDetailService.deleteServiceDetailById(serviceId)) {
             System.out.println("ServiceDetailService deleteState=0 操作成功");
-        }else{
+        } else {
             ResponseBo.fail("ServiceDetailService deleteState=0 操作失败");
         }
 
         if (testResultService.deleteTestResultById(serviceId)) {
             System.out.println("TestResultService deleteState=0 操作成功");
-        }else{
+        } else {
             ResponseBo.fail("TestResultService deleteState=0 操作失败");
         }
 
         if (groupLevelService.deleteGroupLevelById(serviceId)) {
             System.out.println("GroupLevelService deleteState=0 操作成功");
-        }else{
+        } else {
             ResponseBo.fail("GroupLevelService deleteState=0 操作失败");
         }
 
         if (sagLevelService.deleteSagLevelById(serviceId)) {
             System.out.println("SagLevelService deleteState=0 操作成功");
-        }else{
+        } else {
             ResponseBo.fail("SagLevelService deleteState=0 操作失败");
         }
         return ResponseBo.ok();
     }
 
-    @PostMapping({"update"})
-    public ResponseBo updateService(Service service) {
-        if (this.serviceService.updateService(service)) {
-            return ResponseBo.ok();
-        } else {
-            return ResponseBo.fail();
-        }
-    }
+//    @PostMapping({"update"})
+//    public ResponseBo updateService(Service service) {
+//        if (this.serviceService.updateService(service)) {
+//            return ResponseBo.ok();
+//        } else {
+//            return ResponseBo.fail();
+//        }
+//    }
 
 }

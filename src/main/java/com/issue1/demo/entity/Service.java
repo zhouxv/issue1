@@ -1,14 +1,18 @@
 package com.issue1.demo.entity;
 
 
-import lombok.Data;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
- *  Entity
+ * Entity
  *
  * @author zhouxv
  */
@@ -25,7 +29,9 @@ public class Service {
     /**
      * 服务名称
      */
+    @Valid
     @TableField("serviceName")
+    @NotBlank(message = "服务名称不能为空")
     private String servicename;
 
     /**
@@ -43,13 +49,18 @@ public class Service {
     /**
      * 服务的参评公司
      */
+    @Valid
     @TableField("serviceCompany")
+    @NotBlank(message = "参评公司不能为空")
     private String servicecompany;
 
     /**
      * 服务类型,九个类别之一
      */
+    @Valid
     @TableField("serviceType")
+    @NotBlank(message = "服务类型不能为空")
+    @Pattern(message = "服务类型必须为规定的九个类别之一", regexp = "数据服务|计算服务|网络服务|社交通讯服务|信息检索服务|信息管理服务|交易支付服务|多媒体服务|信息发布订阅服务")
     private String servicetype;
 
     /**
