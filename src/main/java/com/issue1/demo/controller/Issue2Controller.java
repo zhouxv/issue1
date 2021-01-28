@@ -1,23 +1,22 @@
 package com.issue1.demo.controller;
 
-import com.issue1.demo.entity.Issue2Result;
-import com.issue1.demo.entity.Issue2ResultDetail;
-import com.issue1.demo.entity.Service;
+import com.issue1.demo.entity.*;
 import com.issue1.demo.service.*;
+import com.issue1.demo.util.CountIndexLevel;
+import com.issue1.demo.util.CountSagLevel;
+import com.issue1.demo.utilEntity.Issue2ResultUtil;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.ResponseBo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.issue1.demo.util.Issue2Util.issue2ResultToService;
+import static com.issue1.demo.util.CountGroupLevel.setGroupLevel;
+import static com.issue1.demo.util.Issue2Util.*;
 
 /**
  * Controller
@@ -30,16 +29,14 @@ import static com.issue1.demo.util.Issue2Util.issue2ResultToService;
 @RequestMapping({"issue2"})
 public class Issue2Controller extends BaseController {
     private final IServiceService serviceService;
-    private final IServiceDetailService serviceDetailService;
     private final ITestResultService testResultService;
     private final IGroupLevelService groupLevelService;
     private final ISagLevelService sagLevelService;
     private final IIssue2ResultService issue2ResultService;
     private final IIssue2ResultDetailService iIssue2ResultDetailService;
 
-    public Issue2Controller(IIssue2ResultService issue2ResultService, IIssue2ResultDetailService iIssue2ResultDetailService, IServiceService serviceService, IServiceDetailService serviceDetailService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
+    public Issue2Controller(IIssue2ResultService issue2ResultService, IIssue2ResultDetailService iIssue2ResultDetailService, IServiceService serviceService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
         this.serviceService = serviceService;
-        this.serviceDetailService = serviceDetailService;
         this.testResultService = testResultService;
         this.groupLevelService = groupLevelService;
         this.sagLevelService = sagLevelService;
@@ -47,8 +44,28 @@ public class Issue2Controller extends BaseController {
         this.iIssue2ResultDetailService = iIssue2ResultDetailService;
     }
 
+    @GetMapping({"getAll"})
+    public ResponseBo getAllIssue2Results(Issue2Result issue2Result) {
+        List<Issue2Result> data = this.issue2ResultService.findIssue2Results(issue2Result);
+        if (data != null) {
+            if (data.size() != 0)
+                System.out.println(data.get(0));
+            return ResponseBo.ok(data);
+        }
+        return ResponseBo.fail();
+    }
+
+    @GetMapping({"getAllDetailById"})
+    public ResponseBo getAllIssue2ResultDetails(Issue2ResultDetail issue2ResultDetail) {
+        List<Issue2ResultDetail> data = this.iIssue2ResultDetailService.findIssue2ResultDetails(issue2ResultDetail);
+        if (data != null) {
+            return ResponseBo.ok(data);
+        }
+        return ResponseBo.fail();
+    }
+
     @PostMapping({"add"})
-    public ResponseBo addService(@Validated @RequestBody Issue2Result issue2Result, BindingResult bindingResult) {
+    public ResponseBo addService(@Validated @RequestBody Issue2ResultUtil issue2ResultUtil, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuffer stringBuffer = new StringBuffer();
             for (ObjectError allError : bindingResult.getAllErrors()) {
@@ -56,6 +73,7 @@ public class Issue2Controller extends BaseController {
             }
             return ResponseBo.fail(stringBuffer.toString());
         }
+        Issue2Result issue2Result = utilToEntity(issue2ResultUtil);
 
         System.out.println(issue2Result);
         System.out.println(issue2Result.getEvaluation_results());
@@ -79,47 +97,44 @@ public class Issue2Controller extends BaseController {
         if (!this.serviceService.createService(service))
             ResponseBo.fail("service添加失败");
 
+        TestResult testResult = generateIssue2TestResult(service);
 
-//        CountIndexLevel.countTestResult(testResult);
-//        service.setServiceid(testResult.getServiceid());
-//
-//        if (this.testResultService.createTestResult(testResult)) {
-//            System.out.println("serviceId:" + testResult.getServiceid() + ",testResult添加成功");
-//
-//            service.setState(2);
-//            this.serviceService.updateService(service);
-//
-//            GroupLevel groupLevel = setGroupLevel(testResult);
-//
-//            if (this.groupLevelService.createGroupLevel(groupLevel)) {
-//                System.out.println("serviceId:" + groupLevel.getServiceid() + ",groupLevel添加成功");
-//                service.setState(3);
-//                this.serviceService.updateService(service);
-//
-//                SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
-//
-//                if (this.sagLevelService.createSagLevel(sagLevel)) {
-//                    System.out.println("serviceId:" + sagLevel.getServiceid() + ",sagLevel");
-//
-//                    service.setState(4);
-//                    service.setServicelevel(sagLevel.getLevel());
-//                    this.serviceService.updateService(service);
-//
-//                    return ResponseBo.ok("全部数据已正确添加");
-//                } else {
-//                    return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult添加成功,groupLevel添加成功,sagLevel添加失败");
-//                }
-//
-//            } else {
-//                return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult添加成功,groupLevel添加失败");
-//            }
-//
-//        } else {
-//            return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult添加失败");
-//        }
+        CountIndexLevel.countTestResult(testResult);
 
+        if (this.testResultService.createTestResult(testResult)) {
+            System.out.println("serviceId:" + testResult.getServiceid() + ",testResult添加成功");
 
-        return ResponseBo.ok("添加成功");
+            service.setState(2);
+            this.serviceService.updateService(service);
+
+            GroupLevel groupLevel = setGroupLevel(testResult);
+
+            if (this.groupLevelService.createGroupLevel(groupLevel)) {
+                System.out.println("serviceId:" + groupLevel.getServiceid() + ",groupLevel添加成功");
+                service.setState(3);
+                this.serviceService.updateService(service);
+
+                SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
+
+                if (this.sagLevelService.createSagLevel(sagLevel)) {
+                    System.out.println("serviceId:" + sagLevel.getServiceid() + ",sagLevel");
+
+                    service.setState(4);
+                    service.setServicelevel(sagLevel.getLevel());
+                    this.serviceService.updateService(service);
+
+                    return ResponseBo.ok("全部数据已正确添加");
+                } else {
+                    return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult添加成功,groupLevel添加成功,sagLevel添加失败");
+                }
+
+            } else {
+                return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult添加成功,groupLevel添加失败");
+            }
+
+        } else {
+            return ResponseBo.fail("serviceId:" + testResult.getServiceid() + ",testResult添加失败");
+        }
     }
 
 }

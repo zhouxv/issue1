@@ -19,12 +19,12 @@ public class Issue2Result {
     private Integer issue2resultid;
 
     /**
-     * 服务ID-测评ID，课题一、课题五使用
+     服务ID-测评ID，课题一、课题五使用
      */
-    @TableField("serviceId_testId")
+    @TableField("serviceIdTestId")
     @Valid
     @NotBlank(message = "serviceID_TestID字段不能为空")
-    private String serviceID_TestID;
+    private String serviceIDtestID;
 
     /**
      * 参评业务名称
@@ -32,7 +32,7 @@ public class Issue2Result {
     @TableField("businessName")
     @Valid
     @NotBlank(message = "business_name字段不能为空")
-    private String business_name;
+    private String businessName;
 
     /**
      * 参评企业名称
@@ -40,7 +40,7 @@ public class Issue2Result {
     @TableField("companyName")
     @Valid
     @NotBlank(message = "company_name字段不能为空")
-    private String company_name;
+    private String companyName;
 
     /**
      * 参评业务介绍
@@ -48,7 +48,7 @@ public class Issue2Result {
     @TableField("businessIntroduce")
     @Valid
     @NotBlank(message = "business_introduce字段不能为空")
-    private String business_introduce;
+    private String businessIntroduce;
 
     /**
      * 测评人、测评机构
@@ -64,7 +64,7 @@ public class Issue2Result {
     @TableField("evaluationTime")
     @Valid
     @NotBlank(message = "evaluation_time字段不能为空")
-    private String evaluation_time;
+    private String evaluationTime;
 
     /**
      * 测评地点
@@ -72,7 +72,7 @@ public class Issue2Result {
     @TableField("evaluationAddr")
     @Valid
     @NotBlank(message = "evaluation_addr字段不能为空")
-    private String evaluation_addr;
+    private String evaluationAddr;
 
     /**
      * 服务类别，课题一使用
@@ -91,10 +91,25 @@ public class Issue2Result {
     private Integer level;
 
     /**
-     * 测评结果
+     测评结果
      */
     @Valid
     @NotNull(message = "evaluation_results不能为空")
     @TableField(exist = false)
     private List<Issue2ResultDetail> evaluation_results;
+
+
+//    public Issue2Result(Issue2ResultUtil issue2ResultUtil) {
+//        this.issue2resultid = issue2ResultUtil.issue2resultid;
+//        this.serviceIDtestID = issue2ResultUtil.serviceID_TestID;
+//        this.businessName = issue2ResultUtil.business_name;
+//        this.companyName = issue2ResultUtil.company_name;
+//        this.businessIntroduce = issue2ResultUtil.business_introduce;
+//        this.evaluator = issue2ResultUtil.evaluator;
+//        this.evaluationTime = issue2ResultUtil.evaluation_time;
+//        this.evaluationAddr = issue2ResultUtil.evaluation_addr;
+//        this.serviceType = issue2ResultUtil.serviceType;
+//        this.level = issue2ResultUtil.level;
+//        this.evaluation_results = issue2ResultUtil.evaluation_results;
+//    }
 }

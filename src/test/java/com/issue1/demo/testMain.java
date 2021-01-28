@@ -1,7 +1,13 @@
 package com.issue1.demo;
 
+import com.issue1.demo.entity.Service;
+
+import static com.issue1.demo.util.Issue2Util.generateIssue2TestResult;
+
 public class testMain {
     public static void main(String[] args) {
-        System.out.println("1,2,3,4,5,6,7,".matches("(\\d+,){7}\\d+"));
+        Service service = new Service();
+        service.setServiceid(1);
+        System.out.println(generateIssue2TestResult(service));
     }
 }
