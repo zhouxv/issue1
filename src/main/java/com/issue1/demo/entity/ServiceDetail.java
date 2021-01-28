@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 @Data
 @TableName("service_detail")
 public class ServiceDetail {
-
     /**
      * 
      */

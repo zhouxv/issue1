@@ -10,7 +10,7 @@ import com.issue1.demo.service.IServiceService;
 import com.issue1.demo.service.ITestResultService;
 import com.issue1.demo.util.CountIndexLevel;
 import com.issue1.demo.util.CountSagLevel;
-import com.issue1.demo.util.FormatCheckResult;
+import com.issue1.demo.utilEntity.FormatCheckResult;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.ResponseBo;
 import lombok.extern.slf4j.Slf4j;

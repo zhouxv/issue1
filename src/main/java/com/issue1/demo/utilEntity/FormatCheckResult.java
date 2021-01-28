@@ -1,4 +1,4 @@
-package com.issue1.demo.util;
+package com.issue1.demo.utilEntity;
 
 public class FormatCheckResult {
     public boolean error;

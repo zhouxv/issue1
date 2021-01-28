@@ -74,4 +74,7 @@ public class Service {
      */
     @TableField("serviceLevel")
     private String servicelevel;
+
+    @TableField("issue2ResultId")
+    private Integer issue2resultid;
 }

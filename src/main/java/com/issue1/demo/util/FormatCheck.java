@@ -1,6 +1,7 @@
 package com.issue1.demo.util;
 
 import com.issue1.demo.entity.TestResult;
+import com.issue1.demo.utilEntity.FormatCheckResult;
 
 import java.util.List;
 
@@ -17,12 +18,16 @@ public class FormatCheck {
         for (int i = 0; i < stringList.size(); i++) {
             if (stringList.get(i) == null) {
                 result.setError(true);
-                stringBuffer.append("指标" + (i + 1) + "的不能为空；");
+                stringBuffer.append("指标");
+                stringBuffer.append(i + 1);
+                stringBuffer.append("的不能为空；");
                 continue;
             }
             if (!stringList.get(i).matches("(\\d+,){7}\\d+")) {
                 result.setError(true);
-                stringBuffer.append("指标" + (i + 1) + "的测试结果格式不符合要求；");
+                stringBuffer.append("指标");
+                stringBuffer.append(i + 1);
+                stringBuffer.append("的测试结果格式不符合要求；");
             }
         }
 
