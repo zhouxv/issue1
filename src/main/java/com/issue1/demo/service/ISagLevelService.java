@@ -30,6 +30,8 @@ public interface ISagLevelService extends IService<SagLevel> {
      */
     List<SagLevel> findSagLevels(SagLevel sagLevel);
 
+    SagLevel findOneSagLevel(Integer serviceId);
+
     /**
      * 新增
      *

@@ -30,6 +30,8 @@ public interface IGroupLevelService extends IService<GroupLevel> {
      */
     List<GroupLevel> findGroupLevels(GroupLevel groupLevel);
 
+    GroupLevel findOneGroupLevel(Integer serviceId);
+
     /**
      * 新增
      *

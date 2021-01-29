@@ -38,10 +38,18 @@ public class TestResultServiceImpl extends ServiceImpl<TestResultMapper, TestRes
 
     @Override
     public List<TestResult> findTestResults(TestResult testResult) {
-	    LambdaQueryWrapper<TestResult> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<TestResult> queryWrapper = new LambdaQueryWrapper<>();
         //按servieceId索引
-        if(testResult.getServiceid()!=null) queryWrapper.eq(TestResult::getServiceid,testResult.getServiceid());
-		return this.baseMapper.selectList(queryWrapper);
+        if (testResult.getServiceid() != null) queryWrapper.eq(TestResult::getServiceid, testResult.getServiceid());
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public TestResult findOneTestResultByServiceId(Integer serviceId) {
+        LambdaQueryWrapper<TestResult> queryWrapper = new LambdaQueryWrapper<>();
+        //按servieceId索引
+        queryWrapper.eq(TestResult::getServiceid, serviceId);
+        return this.baseMapper.selectOne(queryWrapper);
     }
 
     @Override

@@ -16,4 +16,8 @@ public class Issue1TopLevel {
     public void setValue(String value) {
         this.value = value;
     }
+
+    public Issue1TopLevel(String value) {
+        this.value = value;
+    }
 }

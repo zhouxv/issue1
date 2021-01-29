@@ -1,10 +1,9 @@
 package com.issue1.demo.service;
 
-import com.issue1.demo.entity.Service;
-import com.issue1.dependence.common.entity.QueryRequest;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.issue1.demo.entity.Service;
+import com.issue1.dependence.common.entity.QueryRequest;
 
 import java.util.List;
 
@@ -30,6 +29,8 @@ public interface IServiceService extends IService<Service> {
      * @return List<Service>
      */
     List<Service> findServices(Service service);
+
+    Service findOneServiceByIssue2ResultId(Integer issue2ResultId);
 
     /**
      * 新增

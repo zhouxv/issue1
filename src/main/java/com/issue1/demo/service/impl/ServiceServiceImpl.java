@@ -1,19 +1,16 @@
 package com.issue1.demo.service.impl;
 
-import com.issue1.demo.entity.TestResult;
-import com.issue1.dependence.common.entity.QueryRequest;
-import com.issue1.demo.entity.Service;
-import com.issue1.demo.mapper.ServiceMapper;
-import com.issue1.demo.service.IServiceService;
-
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-import lombok.RequiredArgsConstructor;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.issue1.demo.entity.Service;
+import com.issue1.demo.mapper.ServiceMapper;
+import com.issue1.demo.service.IServiceService;
+import com.issue1.dependence.common.entity.QueryRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,10 +36,18 @@ public class ServiceServiceImpl extends ServiceImpl<ServiceMapper, Service> impl
 
     @Override
     public List<Service> findServices(Service service) {
-	    LambdaQueryWrapper<Service> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<Service> queryWrapper = new LambdaQueryWrapper<>();
         //按servieceId索引
-        if(service.getServiceid()!=null) queryWrapper.eq(Service::getServiceid,service.getServiceid());
-		return this.baseMapper.selectList(queryWrapper);
+        if (service.getServiceid() != null) queryWrapper.eq(Service::getServiceid, service.getServiceid());
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public Service findOneServiceByIssue2ResultId(Integer issue2ResultId) {
+        LambdaQueryWrapper<Service> queryWrapper = new LambdaQueryWrapper<>();
+        //按servieceId索引
+        queryWrapper.eq(Service::getIssue2resultid, issue2ResultId);
+        return this.baseMapper.selectOne(queryWrapper);
     }
 
     @Override

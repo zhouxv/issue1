@@ -1,10 +1,9 @@
 package com.issue1.demo.service;
 
-import com.issue1.demo.entity.TestResult;
-import com.issue1.dependence.common.entity.QueryRequest;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.issue1.demo.entity.TestResult;
+import com.issue1.dependence.common.entity.QueryRequest;
 
 import java.util.List;
 
@@ -23,6 +22,7 @@ public interface ITestResultService extends IService<TestResult> {
      */
     IPage<TestResult> findTestResults(QueryRequest request, TestResult testResult);
 
+
     /**
      * 查询（所有）
      *
@@ -30,6 +30,8 @@ public interface ITestResultService extends IService<TestResult> {
      * @return List<TestResult>
      */
     List<TestResult> findTestResults(TestResult testResult);
+
+    TestResult findOneTestResultByServiceId(Integer serviceId);
 
     /**
      * 新增

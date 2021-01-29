@@ -27,9 +27,27 @@ public class Issue2ResultServiceDetailImpl extends ServiceImpl<Issue2ResultDetai
     @Override
     public List<Issue2ResultDetail> findIssue2ResultDetails(Issue2ResultDetail issue2ResultDetail) {
         LambdaQueryWrapper<Issue2ResultDetail> queryWrapper = new LambdaQueryWrapper<>();
-        //按indexId索引
-        if (issue2ResultDetail.getIssue2resultid() != null)
+        //按Id索引
+        if (issue2ResultDetail != null && issue2ResultDetail.getIssue2resultid() != null)
             queryWrapper.eq(Issue2ResultDetail::getIssue2resultid, issue2ResultDetail.getIssue2resultid());
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<Issue2ResultDetail> findIssue2ResultDetailsByIssue2ResultId(Integer issue2ResultId) {
+        LambdaQueryWrapper<Issue2ResultDetail> queryWrapper = new LambdaQueryWrapper<>();
+        //按Id索引
+        if (issue2ResultId != null)
+            queryWrapper.eq(Issue2ResultDetail::getIssue2resultid, issue2ResultId);
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<Issue2ResultDetail> findIssue2ResultDetails(String serviceid_testid, String level) {
+        LambdaQueryWrapper<Issue2ResultDetail> queryWrapper = new LambdaQueryWrapper<>();
+        //按Id索引
+        queryWrapper.eq(Issue2ResultDetail::getServiceIDtestID, serviceid_testid);
+        queryWrapper.eq(Issue2ResultDetail::getLevel, level);
         return this.baseMapper.selectList(queryWrapper);
     }
 

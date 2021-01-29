@@ -230,6 +230,15 @@ public class ConvertList {
         return doubleList;
     }
 
+    public static Double[] stringToDoubleArray2(String str) {
+        String[] strArray = str.split(",");
+        Double[] doubleArray = new Double[strArray.length];
+        for (int i = 0; i < strArray.length; i++) {
+            doubleArray[i] = Double.parseDouble(strArray[i]);
+        }
+        return doubleArray;
+    }
+
     public static double formatDouble(double d) {
         // 新方法，如果不需要四舍五入，可以使用RoundingMode.DOWN
         BigDecimal bg = new BigDecimal(d).setScale(2, RoundingMode.UP);

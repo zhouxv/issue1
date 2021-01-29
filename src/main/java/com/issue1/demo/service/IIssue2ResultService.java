@@ -19,6 +19,8 @@ public interface IIssue2ResultService extends IService<Issue2Result> {
      */
     List<Issue2Result> findIssue2Results(Issue2Result issue2Result);
 
+    List<Issue2Result> findIssue2ResultsBySTId(Issue2Result issue2Result);
+
     /**
      * 新增
      *

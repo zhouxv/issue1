@@ -38,10 +38,18 @@ public class GroupLevelServiceImpl extends ServiceImpl<GroupLevelMapper, GroupLe
 
     @Override
     public List<GroupLevel> findGroupLevels(GroupLevel groupLevel) {
-	    LambdaQueryWrapper<GroupLevel> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<GroupLevel> queryWrapper = new LambdaQueryWrapper<>();
         //按servieceId索引
-        if(groupLevel.getServiceid()!=null) queryWrapper.eq(GroupLevel::getServiceid,groupLevel.getServiceid());
-		return this.baseMapper.selectList(queryWrapper);
+        if (groupLevel.getServiceid() != null) queryWrapper.eq(GroupLevel::getServiceid, groupLevel.getServiceid());
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public GroupLevel findOneGroupLevel(Integer serviceId) {
+        LambdaQueryWrapper<GroupLevel> queryWrapper = new LambdaQueryWrapper<>();
+        //按servieceId索引
+        queryWrapper.eq(GroupLevel::getServiceid, serviceId);
+        return this.baseMapper.selectOne(queryWrapper);
     }
 
     @Override

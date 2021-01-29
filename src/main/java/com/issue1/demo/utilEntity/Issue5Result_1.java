@@ -36,4 +36,6 @@ public class Issue5Result_1 {
     public void setGroupLevel(List<Issue1GroupLevel> groupLevel) {
         this.groupLevel = groupLevel;
     }
+
+
 }

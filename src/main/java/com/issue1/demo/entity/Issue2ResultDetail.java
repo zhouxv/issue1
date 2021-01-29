@@ -19,6 +19,9 @@ public class Issue2ResultDetail {
     @TableField("issue2ResultId")
     private Integer issue2resultid;
 
+    @TableField("serviceIdTestId")
+    private String serviceIDtestID;
+
     @TableField("secureGroup")
     @Valid
     @NotBlank(message = "evaluation_results中的secure_group字段不能为空")

@@ -75,9 +75,20 @@ public class Issue2Controller extends BaseController {
         }
         Issue2Result issue2Result = utilToEntity(issue2ResultUtil);
 
-        System.out.println(issue2Result);
-        System.out.println(issue2Result.getEvaluation_results());
+        List<Issue2Result> issue2Results = this.issue2ResultService.findIssue2ResultsBySTId(issue2Result);
+        if (!issue2Results.isEmpty()) {
+            List<Issue2ResultDetail> list = issue2Result.getEvaluation_results();
 
+            for (Issue2ResultDetail issue2ResultDetail : list) {
+                issue2ResultDetail.setIssue2resultid(issue2Results.get(0).getIssue2resultid());
+                issue2ResultDetail.setServiceIDtestID(issue2Result.getServiceIDtestID());
+            }
+
+            if (!this.iIssue2ResultDetailService.createIssue2ResultDetailBatch(list))
+                ResponseBo.fail("issue2ResultDetail添加失败");
+
+            return ResponseBo.ok("serviceid_testid = " + issue2Results.get(0).getIssue2resultid() + " 的数据补充成功");
+        }
 
         if (!this.issue2ResultService.createIssue2Result(issue2Result))
             ResponseBo.fail("issue2Result添加失败");
@@ -86,6 +97,7 @@ public class Issue2Controller extends BaseController {
 
         for (Issue2ResultDetail issue2ResultDetail : list) {
             issue2ResultDetail.setIssue2resultid(issue2Result.getIssue2resultid());
+            issue2ResultDetail.setServiceIDtestID(issue2Result.getServiceIDtestID());
         }
 
         if (!this.iIssue2ResultDetailService.createIssue2ResultDetailBatch(list))
@@ -123,7 +135,7 @@ public class Issue2Controller extends BaseController {
                     service.setServicelevel(sagLevel.getLevel());
                     this.serviceService.updateService(service);
 
-                    return ResponseBo.ok("全部数据已正确添加");
+                    return ResponseBo.ok("serviceid_testid = " + issue2Result.getIssue2resultid() + " 的数据 新增成功");
                 } else {
                     return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult添加成功,groupLevel添加成功,sagLevel添加失败");
                 }

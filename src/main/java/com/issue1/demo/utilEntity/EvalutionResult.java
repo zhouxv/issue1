@@ -25,4 +25,9 @@ public class EvalutionResult {
     public void setVonf(String vonf) {
         this.vonf = vonf;
     }
+
+    public EvalutionResult(String index, String vonf) {
+        this.index = index;
+        this.vonf = vonf;
+    }
 }

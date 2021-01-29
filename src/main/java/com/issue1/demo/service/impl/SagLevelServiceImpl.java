@@ -38,10 +38,18 @@ public class SagLevelServiceImpl extends ServiceImpl<SagLevelMapper, SagLevel> i
 
     @Override
     public List<SagLevel> findSagLevels(SagLevel sagLevel) {
-	    LambdaQueryWrapper<SagLevel> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<SagLevel> queryWrapper = new LambdaQueryWrapper<>();
         //按servieceId索引
-        if(sagLevel.getServiceid()!=null) queryWrapper.eq(SagLevel::getServiceid,sagLevel.getServiceid());
-		return this.baseMapper.selectList(queryWrapper);
+        if (sagLevel.getServiceid() != null) queryWrapper.eq(SagLevel::getServiceid, sagLevel.getServiceid());
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public SagLevel findOneSagLevel(Integer serviceId) {
+        LambdaQueryWrapper<SagLevel> queryWrapper = new LambdaQueryWrapper<>();
+        //按servieceId索引
+        queryWrapper.eq(SagLevel::getServiceid, serviceId);
+        return this.baseMapper.selectOne(queryWrapper);
     }
 
     @Override

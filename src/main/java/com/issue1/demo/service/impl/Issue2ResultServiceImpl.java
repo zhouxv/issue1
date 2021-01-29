@@ -27,9 +27,18 @@ public class Issue2ResultServiceImpl extends ServiceImpl<Issue2ResultMapper, Iss
     @Override
     public List<Issue2Result> findIssue2Results(Issue2Result issue2Result) {
         LambdaQueryWrapper<Issue2Result> queryWrapper = new LambdaQueryWrapper<>();
-        //按indexId索引
-        if (issue2Result.getIssue2resultid() != null)
+        //按Id索引
+        if (issue2Result != null && issue2Result.getIssue2resultid() != null)
             queryWrapper.eq(Issue2Result::getIssue2resultid, issue2Result.getIssue2resultid());
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<Issue2Result> findIssue2ResultsBySTId(Issue2Result issue2Result) {
+        LambdaQueryWrapper<Issue2Result> queryWrapper = new LambdaQueryWrapper<>();
+        //按Id索引
+        if (issue2Result != null && issue2Result.getServiceIDtestID() != null)
+            queryWrapper.eq(Issue2Result::getServiceIDtestID, issue2Result.getServiceIDtestID());
         return this.baseMapper.selectList(queryWrapper);
     }
 
