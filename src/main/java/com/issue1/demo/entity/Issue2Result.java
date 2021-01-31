@@ -70,13 +70,24 @@ public class Issue2Result {
     private Integer level;
 
     /**
-     测评结果
+     * 测评结果
      */
     @TableField(exist = false)
     private List<Issue2ResultDetail> evaluation_results;
 
+    public Issue2Result() {
+    }
 
-//    public Issue2Result(Issue2ResultUtil issue2ResultUtil) {
+    public Issue2Result(String serviceIDtestID) {
+        this.serviceIDtestID = serviceIDtestID;
+    }
+
+    public Issue2Result(Integer issue2resultid, String serviceIDtestID) {
+        this.issue2resultid = issue2resultid;
+        this.serviceIDtestID = serviceIDtestID;
+    }
+
+    //    public Issue2Result(Issue2ResultUtil issue2ResultUtil) {
 //        this.issue2resultid = issue2ResultUtil.issue2resultid;
 //        this.serviceIDtestID = issue2ResultUtil.serviceID_TestID;
 //        this.businessName = issue2ResultUtil.business_name;

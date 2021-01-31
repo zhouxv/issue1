@@ -1,6 +1,6 @@
-package com.issue1.demo.service.impl;
+package com.issue1.demo.service.businessServiceImpl;
 
-import com.issue1.demo.service.IRemoteAccess;
+import com.issue1.demo.service.businessService.IRemoteAccess;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -24,7 +24,6 @@ public class RemoteAccessImpl implements IRemoteAccess {
     public Object postJson(String url, Object params) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Object> responseEntity = restTemplate.postForEntity(url, params, Object.class);
-        Object body = responseEntity.getBody();
-        return body;
+        return responseEntity.getBody();
     }
 }

@@ -32,4 +32,18 @@ public class Issue2ResultDetail {
 
     @TableField("conf")
     private String conf;
+
+    public Issue2ResultDetail() {
+    }
+
+    public Issue2ResultDetail(Integer issue2resultid, String serviceIDtestID) {
+        this.issue2resultid = issue2resultid;
+        this.serviceIDtestID = serviceIDtestID;
+    }
+
+    public Issue2ResultDetail(Integer issue2resultid, String serviceIDtestID, Integer grade) {
+        this.issue2resultid = issue2resultid;
+        this.serviceIDtestID = serviceIDtestID;
+        this.grade = grade;
+    }
 }

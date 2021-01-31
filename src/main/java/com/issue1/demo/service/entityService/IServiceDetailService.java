@@ -1,10 +1,9 @@
-package com.issue1.demo.service;
-
-import com.issue1.demo.entity.ServiceDetail;
-import com.issue1.dependence.common.entity.QueryRequest;
+package com.issue1.demo.service.entityService;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.issue1.demo.entity.ServiceDetail;
+import com.issue1.dependence.common.entity.QueryRequest;
 
 import java.util.List;
 

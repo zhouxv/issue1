@@ -1,15 +1,16 @@
-package com.issue1.demo.service.impl;
+package com.issue1.demo.service.entityServiceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.issue1.demo.entity.Issue2ResultDetail;
 import com.issue1.demo.mapper.Issue2ResultDetailMapper;
-import com.issue1.demo.service.IIssue2ResultDetailService;
+import com.issue1.demo.service.entityService.IIssue2ResultDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,20 +26,23 @@ public class Issue2ResultServiceDetailImpl extends ServiceImpl<Issue2ResultDetai
     private final Issue2ResultDetailMapper issue2ResultDetailMapper;
 
     @Override
-    public List<Issue2ResultDetail> findIssue2ResultDetails(Issue2ResultDetail issue2ResultDetail) {
+    public List<Issue2ResultDetail> findIssue2ResultDetails() {
         LambdaQueryWrapper<Issue2ResultDetail> queryWrapper = new LambdaQueryWrapper<>();
-        //按Id索引
-        if (issue2ResultDetail != null && issue2ResultDetail.getIssue2resultid() != null)
-            queryWrapper.eq(Issue2ResultDetail::getIssue2resultid, issue2ResultDetail.getIssue2resultid());
         return this.baseMapper.selectList(queryWrapper);
     }
 
     @Override
-    public List<Issue2ResultDetail> findIssue2ResultDetailsByIssue2ResultId(Integer issue2ResultId) {
+    public List<Issue2ResultDetail> findIssue2ResultDetails(Issue2ResultDetail issue2ResultDetail) {
         LambdaQueryWrapper<Issue2ResultDetail> queryWrapper = new LambdaQueryWrapper<>();
-        //按Id索引
-        if (issue2ResultId != null)
-            queryWrapper.eq(Issue2ResultDetail::getIssue2resultid, issue2ResultId);
+        if ((issue2ResultDetail.getIssue2resultid() == null) && (issue2ResultDetail.getServiceIDtestID() == null) && (issue2ResultDetail.getGrade() == null))
+            return new ArrayList<>();
+
+        if (!(issue2ResultDetail.getIssue2resultid() == null))
+            queryWrapper.eq(Issue2ResultDetail::getIssue2resultid, issue2ResultDetail.getIssue2resultid());
+        if (!(issue2ResultDetail.getServiceIDtestID() == null))
+            queryWrapper.eq(Issue2ResultDetail::getServiceIDtestID, issue2ResultDetail.getServiceIDtestID());
+        if (!(issue2ResultDetail.getGrade() == null))
+            queryWrapper.eq(Issue2ResultDetail::getGrade, issue2ResultDetail.getGrade());
         return this.baseMapper.selectList(queryWrapper);
     }
 

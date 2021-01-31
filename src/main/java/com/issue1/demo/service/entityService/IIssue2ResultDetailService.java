@@ -1,4 +1,4 @@
-package com.issue1.demo.service;
+package com.issue1.demo.service.entityService;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.issue1.demo.entity.Issue2ResultDetail;
@@ -11,15 +11,22 @@ import java.util.List;
  * @author zhouxv
  */
 public interface IIssue2ResultDetailService extends IService<Issue2ResultDetail> {
+
     /**
      * 查询（所有）
+     *
+     * @return List<GroupLevel>
+     */
+    List<Issue2ResultDetail> findIssue2ResultDetails();
+
+    /**
+     * 查询（所有)符合条件的
+     * 根据id，serviceIdTestId，grade三个字段
      *
      * @param issue2ResultDetail issue2ResultDetail
      * @return List<GroupLevel>
      */
     List<Issue2ResultDetail> findIssue2ResultDetails(Issue2ResultDetail issue2ResultDetail);
-
-    List<Issue2ResultDetail> findIssue2ResultDetailsByIssue2ResultId(Integer issue2ResultId);
 
     List<Issue2ResultDetail> findIssue2ResultDetails(String serviceid_testid, Integer grade);
 

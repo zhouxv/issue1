@@ -1,4 +1,4 @@
-package com.issue1.demo.service;
+package com.issue1.demo.service.entityService;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;

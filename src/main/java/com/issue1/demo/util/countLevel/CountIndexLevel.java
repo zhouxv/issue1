@@ -16,9 +16,8 @@ public class CountIndexLevel {
      @return boolean
      */
     public static boolean conformity(double x, double y) {
-        boolean bool = (x / y > 0.5);
 //        System.out.println(x + "/" + y + ">0.5? " + bool);
-        return bool;
+        return (x / y > 0.5);
     }
 
     /**
@@ -178,17 +177,17 @@ public class CountIndexLevel {
         testResult.setResult117(indexLevel(testResult.getResult117(),117));
         testResult.setResult118(indexLevel(testResult.getResult118(),118));
         testResult.setResult119(indexLevel(testResult.getResult119(),119));
-        testResult.setResult120(indexLevel(testResult.getResult120(),120));
-        testResult.setResult121(indexLevel(testResult.getResult121(),121));
-        testResult.setResult122(indexLevel(testResult.getResult122(),122));
-        testResult.setResult123(indexLevel(testResult.getResult123(),123));
-        testResult.setResult124(indexLevel(testResult.getResult124(),124));
-        testResult.setResult125(indexLevel(testResult.getResult125(),125));
-        testResult.setResult126(indexLevel(testResult.getResult126(),126));
-        testResult.setResult127(indexLevel(testResult.getResult127(),127));
-        testResult.setResult128(indexLevel(testResult.getResult128(),128));
-        testResult.setResult129(indexLevel(testResult.getResult129(),129));
-        testResult.setResult130(indexLevel(testResult.getResult130(),130));
-        System.out.println("指标项等级计算完成");
+        testResult.setResult120(indexLevel(testResult.getResult120(), 120));
+        testResult.setResult121(indexLevel(testResult.getResult121(), 121));
+        testResult.setResult122(indexLevel(testResult.getResult122(), 122));
+        testResult.setResult123(indexLevel(testResult.getResult123(), 123));
+        testResult.setResult124(indexLevel(testResult.getResult124(), 124));
+        testResult.setResult125(indexLevel(testResult.getResult125(), 125));
+        testResult.setResult126(indexLevel(testResult.getResult126(), 126));
+        testResult.setResult127(indexLevel(testResult.getResult127(), 127));
+        testResult.setResult128(indexLevel(testResult.getResult128(), 128));
+        testResult.setResult129(indexLevel(testResult.getResult129(), 129));
+        testResult.setResult130(indexLevel(testResult.getResult130(), 130));
+        System.out.println("ServiceId " + testResult.getServiceid() + " :IndexLevel计算完成");
     }
 }

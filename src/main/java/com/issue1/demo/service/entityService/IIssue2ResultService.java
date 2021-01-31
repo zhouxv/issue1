@@ -1,4 +1,4 @@
-package com.issue1.demo.service;
+package com.issue1.demo.service.entityService;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.issue1.demo.entity.Issue2Result;
@@ -14,12 +14,16 @@ public interface IIssue2ResultService extends IService<Issue2Result> {
     /**
      * 查询（所有）
      *
-     * @param issue2Result Issue2Result
      * @return List<GroupLevel>
      */
-    List<Issue2Result> findIssue2Results(Issue2Result issue2Result);
+    List<Issue2Result> findIssue2Results();
 
     List<Issue2Result> findIssue2ResultsBySTId(Issue2Result issue2Result);
+
+    /*
+    根据 id或者serviceId_testId或者二者同时
+     */
+    Issue2Result findOneIssue2Result(Issue2Result issue2Result);
 
     /**
      * 新增

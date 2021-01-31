@@ -1,4 +1,4 @@
-package com.issue1.demo.service.impl;
+package com.issue1.demo.service.entityServiceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.issue1.demo.entity.Index;
 import com.issue1.demo.mapper.IndexMapper;
-import com.issue1.demo.service.IIndexService;
+import com.issue1.demo.service.entityService.IIndexService;
 import com.issue1.dependence.common.entity.QueryRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

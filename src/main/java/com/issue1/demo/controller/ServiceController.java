@@ -1,7 +1,7 @@
 package com.issue1.demo.controller;
 
 import com.issue1.demo.entity.Service;
-import com.issue1.demo.service.*;
+import com.issue1.demo.service.entityService.*;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.ResponseBo;
 import lombok.extern.slf4j.Slf4j;

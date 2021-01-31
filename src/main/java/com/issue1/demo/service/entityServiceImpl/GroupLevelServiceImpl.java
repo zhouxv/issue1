@@ -1,4 +1,4 @@
-package com.issue1.demo.service.impl;
+package com.issue1.demo.service.entityServiceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.mapper.GroupLevelMapper;
-import com.issue1.demo.service.IGroupLevelService;
+import com.issue1.demo.service.entityService.IGroupLevelService;
 import com.issue1.dependence.common.entity.QueryRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

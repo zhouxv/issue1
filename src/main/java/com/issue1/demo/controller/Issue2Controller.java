@@ -1,7 +1,8 @@
 package com.issue1.demo.controller;
 
 import com.issue1.demo.entity.*;
-import com.issue1.demo.service.*;
+import com.issue1.demo.service.businessService.IIssue5Service;
+import com.issue1.demo.service.entityService.*;
 import com.issue1.demo.util.countLevel.CountIndexLevel;
 import com.issue1.demo.util.countLevel.CountSagLevel;
 import com.issue1.demo.utilEntity.issue2ResultUtil.Issue2ResultUtil;
@@ -34,38 +35,54 @@ public class Issue2Controller extends BaseController {
     private final ISagLevelService sagLevelService;
     private final IIssue2ResultService issue2ResultService;
     private final IIssue2ResultDetailService iIssue2ResultDetailService;
+    private final IIssue5Service issue5Service;
 
-    public Issue2Controller(IIssue2ResultService issue2ResultService, IIssue2ResultDetailService iIssue2ResultDetailService, IServiceService serviceService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
+    public Issue2Controller(IIssue2ResultService issue2ResultService, IIssue2ResultDetailService iIssue2ResultDetailService, IServiceService serviceService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService, IIssue5Service issue5Service) {
         this.serviceService = serviceService;
         this.testResultService = testResultService;
         this.groupLevelService = groupLevelService;
         this.sagLevelService = sagLevelService;
         this.issue2ResultService = issue2ResultService;
         this.iIssue2ResultDetailService = iIssue2ResultDetailService;
+        this.issue5Service = issue5Service;
     }
+
+//    @GetMapping("test")
+//    public ResponseBo test() {
+//        Object o=this.issue5Service.accessIssue5API("http://localhost:10080/issue1/issue2/add","1_1");
+//        return ResponseBo.ok(o);
+//    }
 
     @GetMapping({"getAll"})
-    public ResponseBo getAllIssue2Results(Issue2Result issue2Result) {
-        List<Issue2Result> data = this.issue2ResultService.findIssue2Results(issue2Result);
-        if (data != null) {
-            if (data.size() != 0)
-                System.out.println(data.get(0));
-            return ResponseBo.ok(data);
-        }
-        return ResponseBo.fail();
+    public ResponseBo getAllIssue2Results() {
+        List<Issue2Result> data = this.issue2ResultService.findIssue2Results();
+        return ResponseBo.ok(data);
     }
 
-    @GetMapping({"getAllDetailById"})
-    public ResponseBo getAllIssue2ResultDetails(Issue2ResultDetail issue2ResultDetail) {
+    @GetMapping({"getOne"})
+    public ResponseBo getOneIssue2Result(Integer issue2ResultId, String serviceIDtestID) {
+        Issue2Result issue2Result = new Issue2Result(issue2ResultId, serviceIDtestID);
+        issue2Result = this.issue2ResultService.findOneIssue2Result(issue2Result);
+        return ResponseBo.ok(issue2Result);
+    }
+
+
+    @GetMapping({"getAllDetail"})
+    public ResponseBo getAllIssue2ResultDetails() {
+        List<Issue2ResultDetail> data = this.iIssue2ResultDetailService.findIssue2ResultDetails();
+        return ResponseBo.ok(data);
+    }
+
+    @GetMapping({"getAllDetailBy"})
+    public ResponseBo getAllIssue2ResultDetails(Integer issue2ResultId, String serviceIDtestID, Integer grade) {
+        Issue2ResultDetail issue2ResultDetail = new Issue2ResultDetail(issue2ResultId, serviceIDtestID, grade);
         List<Issue2ResultDetail> data = this.iIssue2ResultDetailService.findIssue2ResultDetails(issue2ResultDetail);
-        if (data != null) {
-            return ResponseBo.ok(data);
-        }
-        return ResponseBo.fail();
+        return ResponseBo.ok(data);
     }
 
     @PostMapping({"add"})
     public ResponseBo addService(@Validated @RequestBody Issue2ResultUtil issue2ResultUtil, BindingResult bindingResult) {
+        //格式校验，出问题会将问题返回
         if (bindingResult.hasErrors()) {
             StringBuffer stringBuffer = new StringBuffer();
             for (ObjectError allError : bindingResult.getAllErrors()) {
@@ -74,21 +91,22 @@ public class Issue2Controller extends BaseController {
             return ResponseBo.fail(stringBuffer.toString());
         }
 
+        //课题二接口字段与系统内部不统一，使用utilToIssue2Result函数来把issue2ResultUtil转换为issue2Result
         Issue2Result issue2Result = utilToIssue2Result(issue2ResultUtil);
 
-        List<Issue2Result> issue2Results = this.issue2ResultService.findIssue2ResultsBySTId(issue2Result);
-        if (!issue2Results.isEmpty()) {
+        Issue2Result issue2Result1 = this.issue2ResultService.findOneIssue2Result(issue2Result);
+        if (!(issue2Result1 == null)) {
             List<Issue2ResultDetail> list = issue2Result.getEvaluation_results();
 
             for (Issue2ResultDetail issue2ResultDetail : list) {
-                issue2ResultDetail.setIssue2resultid(issue2Results.get(0).getIssue2resultid());
+                issue2ResultDetail.setIssue2resultid(issue2Result1.getIssue2resultid());
                 issue2ResultDetail.setServiceIDtestID(issue2Result.getServiceIDtestID());
             }
 
             if (!this.iIssue2ResultDetailService.createIssue2ResultDetailBatch(list))
                 ResponseBo.fail("issue2ResultDetail添加失败");
 
-            return ResponseBo.ok("serviceid_testid = " + issue2Results.get(0).getIssue2resultid() + " 的数据补充成功");
+            return ResponseBo.ok("serviceid_testid = " + issue2Result1.getIssue2resultid() + " 的数据补充成功");
         }
 
         if (!this.issue2ResultService.createIssue2Result(issue2Result))
@@ -104,8 +122,6 @@ public class Issue2Controller extends BaseController {
         if (!this.iIssue2ResultDetailService.createIssue2ResultDetailBatch(list))
             ResponseBo.fail("issue2ResultDetail添加失败");
 
-        System.out.println(issue2Result);
-
         Service service = issue2ResultToService(issue2Result);
         if (!this.serviceService.createService(service))
             ResponseBo.fail("service添加失败");
@@ -115,32 +131,29 @@ public class Issue2Controller extends BaseController {
         CountIndexLevel.countTestResult(testResult);
 
         if (this.testResultService.createTestResult(testResult)) {
-            System.out.println("serviceId:" + testResult.getServiceid() + ",testResult添加成功");
-
             service.setState(2);
             this.serviceService.updateService(service);
 
             GroupLevel groupLevel = countGroupLevel(testResult);
 
             if (this.groupLevelService.createGroupLevel(groupLevel)) {
-                System.out.println("serviceId:" + groupLevel.getServiceid() + ",groupLevel添加成功");
+
                 service.setState(3);
                 this.serviceService.updateService(service);
 
                 SagLevel sagLevel = CountSagLevel.countSagLevel(groupLevel);
 
                 if (this.sagLevelService.createSagLevel(sagLevel)) {
-                    System.out.println("serviceId:" + sagLevel.getServiceid() + ",sagLevel");
-
                     service.setState(4);
                     service.setServicelevel(sagLevel.getLevel());
                     this.serviceService.updateService(service);
 
-                    return ResponseBo.ok("serviceid_testid = " + issue2Result.getIssue2resultid() + " 的数据 新增成功");
+                    this.issue5Service.accessIssue5API("http://192.168.118.146:8098/bjca/service/Task1AndTask2Result", issue2Result.getServiceIDtestID());
+
+                    return ResponseBo.ok("serviceid_testid = " + issue2Result.getServiceIDtestID() + " 的数据新增成功");
                 } else {
                     return ResponseBo.fail("serviceId:" + sagLevel.getServiceid() + ",testResult添加成功,groupLevel添加成功,sagLevel添加失败");
                 }
-
             } else {
                 return ResponseBo.fail("serviceId:" + groupLevel.getServiceid() + ",testResult添加成功,groupLevel添加失败");
             }

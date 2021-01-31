@@ -1,4 +1,4 @@
-package com.issue1.demo.service;
+package com.issue1.demo.service.entityService;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -11,7 +11,6 @@ import java.util.List;
  *  Index接口
  *
  * @author zhouxv
- * @date 2020-12-21 14:47:28
  */
 public interface IIndexService extends IService<Index> {
     /**

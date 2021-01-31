@@ -67,19 +67,20 @@ public class CountSagLevel {
         //服务协议
         gList.add(groupLevel.getServiceagreement());
 
-        System.out.println("S等级");
+        //System.out.println("S等级");
         sagLevel.setSresult(
                 totalCount(sList, new double[]{1, 1, 1, 1, 1, 1, 1, 1}, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
         );
-        System.out.println("A等级");
+        //System.out.println("A等级");
         sagLevel.setAresult(
                 totalCount(aList, new double[]{1, 1, 1, 1, 1, 1, 1}, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
         );
-        System.out.println("G等级");
+        //System.out.println("G等级");
         sagLevel.setGresult(
                 totalCount(gList, new double[]{1, 1, 1, 1, 1, 1, 1, 1}, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
         );
         sagLevel.setLevel(countTopLevel(sagLevel.getSresult(), sagLevel.getAresult(), sagLevel.getGresult()));
+        System.out.println("ServiceId " + groupLevel.getServiceid() + " :SagLevel计算完成");
         return sagLevel;
     }
 
@@ -92,9 +93,9 @@ public class CountSagLevel {
             levelList4.add(list.get(3));
         }
         Double[] doubles = {oneSagLevel(levelList1, weightArray), oneSagLevel(levelList2, weightArray), oneSagLevel(levelList3, weightArray), oneSagLevel(levelList4, weightArray)};
-        for (int i = 0; i < 4; i++) {
-            System.out.println("第" + (i + 1) + "级得分" + doubles[i]);
-        }
+//        for (int i = 0; i < 4; i++) {
+//            System.out.println("第" + (i + 1) + "级得分" + doubles[i]);
+//        }
         return doubles[0] + "," + doubles[1] + "," + doubles[2] + "," + doubles[3] + "," + sagLevel(doubles);
     }
 
@@ -147,7 +148,7 @@ public class CountSagLevel {
         List<Double> gDoubleList = stringToDoubleList(g);
         if (sDoubleList.size() != 5 & aDoubleList.size() != 5 & gDoubleList.size() != 5) return "sag类数据格式错误";
         Double sum = sDoubleList.get(sDoubleList.size() - 1) + aDoubleList.get(aDoubleList.size() - 1) + gDoubleList.get(gDoubleList.size() - 1);
-        System.out.println("sum=" + sum);
+        //System.out.println("sum=" + sum);
         if (sum < 3 & sum >= 0) return "未达到最低等级";
         if (sum == 3) return "基础定义级";
         if (sum > 3 & sum <= 6) return "增强控制级";

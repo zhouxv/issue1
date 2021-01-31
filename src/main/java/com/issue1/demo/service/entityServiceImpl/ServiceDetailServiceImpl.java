@@ -1,20 +1,18 @@
-package com.issue1.demo.service.impl;
-
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.issue1.dependence.common.entity.QueryRequest;
-import com.issue1.demo.entity.ServiceDetail;
-import com.issue1.demo.mapper.ServiceDetailMapper;
-import com.issue1.demo.service.IServiceDetailService;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-import lombok.RequiredArgsConstructor;
+package com.issue1.demo.service.entityServiceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.issue1.demo.entity.ServiceDetail;
+import com.issue1.demo.mapper.ServiceDetailMapper;
+import com.issue1.demo.service.entityService.IServiceDetailService;
+import com.issue1.dependence.common.entity.QueryRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
