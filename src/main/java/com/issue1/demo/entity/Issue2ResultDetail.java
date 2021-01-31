@@ -28,7 +28,7 @@ public class Issue2ResultDetail {
     private Integer index;
 
     @TableField("level")
-    private Integer level;
+    private Integer grade;
 
     @TableField("conf")
     private String conf;

@@ -206,16 +206,16 @@ public class Issue2Util {
         System.out.println();
         switch (issue2ResultDetailUtil.level) {
             case "基础定义级": {
-                issue2ResultDetail.setLevel(1);
+                issue2ResultDetail.setGrade(1);
             }
             case "增强控制级": {
-                issue2ResultDetail.setLevel(2);
+                issue2ResultDetail.setGrade(2);
             }
             case "持续优化级": {
-                issue2ResultDetail.setLevel(3);
+                issue2ResultDetail.setGrade(3);
             }
             case "量化完善级": {
-                issue2ResultDetail.setLevel(4);
+                issue2ResultDetail.setGrade(4);
             }
         }
         return issue2ResultDetail;

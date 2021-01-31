@@ -20,8 +20,8 @@ public class Issue5Util {
         Issue5ResultUtil issue5ResultUtil = new Issue5ResultUtil();
         issue5ResultUtil.setService_category(service.getServicetype());
         issue5ResultUtil.setServiceID_testID(issue2Result.getServiceIDtestID());
-        issue5ResultUtil.setIssue1result(geneIssue5Result_1(service, sagLevel, groupLevel));
-        issue5ResultUtil.setIssue2result(geneIssue5Result_2(issue2Result, issue2ResultDetailList));
+        issue5ResultUtil.setIuuse1result(geneIssue5Result_1(service, sagLevel, groupLevel));
+        issue5ResultUtil.setIuuse2result(geneIssue5Result_2(issue2Result, issue2ResultDetailList));
         return issue5ResultUtil;
     }
 
@@ -72,27 +72,27 @@ public class Issue5Util {
         issue5Result2.setBusiness_introduce(issue2Result.getBusinessIntroduce());
         issue5Result2.setEvaluator(issue2Result.getEvaluator());
         issue5Result2.setEvaluation_time(issue2Result.getEvaluationTime());
-        issue5Result2.setEvaluation_addr(issue2Result.getEvaluationAddr());
-        issue5Result2.setEvaluation_results(convertToEvalutionResults(issue2ResultDetailList));
+        issue5Result2.setEvaluationa_addr(issue2Result.getEvaluationAddr());
+        issue5Result2.setEvalution_results(convertToEvaluationResults(issue2ResultDetailList));
         return issue5Result2;
     }
 
-    public static EvalutionResults convertToEvalutionResults(List<Issue2ResultDetail>... issue2ResultDetailList) {
-        EvalutionResults evalutionResults = new EvalutionResults();
+    public static EvaluationResults convertToEvaluationResults(List<Issue2ResultDetail>... issue2ResultDetailList) {
+        EvaluationResults evaluationResults = new EvaluationResults();
 
-        evalutionResults.setLevel_1(convertToEvalutionResults(issue2ResultDetailList[0]));
-        evalutionResults.setLevel_2(convertToEvalutionResults(issue2ResultDetailList[1]));
-        evalutionResults.setLevel_3(convertToEvalutionResults(issue2ResultDetailList[2]));
-        evalutionResults.setLevel_4(convertToEvalutionResults(issue2ResultDetailList[3]));
+        evaluationResults.setLevel_1(convertToEvaluationResults(issue2ResultDetailList[0]));
+        evaluationResults.setLevel_2(convertToEvaluationResults(issue2ResultDetailList[1]));
+        evaluationResults.setLevel_3(convertToEvaluationResults(issue2ResultDetailList[2]));
+        evaluationResults.setLevel_4(convertToEvaluationResults(issue2ResultDetailList[3]));
 
-        return evalutionResults;
+        return evaluationResults;
     }
 
-    public static List<EvalutionResult> convertToEvalutionResults(List<Issue2ResultDetail> issue2ResultDetailList) {
-        List<EvalutionResult> list = new ArrayList<>();
+    public static List<EvaluationResult> convertToEvaluationResults(List<Issue2ResultDetail> issue2ResultDetailList) {
+        List<EvaluationResult> list = new ArrayList<>();
         if (issue2ResultDetailList.isEmpty()) return list;
         for (Issue2ResultDetail issue2ResultDetail : issue2ResultDetailList) {
-            list.add(new EvalutionResult(issue2ResultDetail.getIndex().toString(), issue2ResultDetail.getConf()));
+            list.add(new EvaluationResult(issue2ResultDetail.getIndex().toString(), issue2ResultDetail.getConf()));
         }
         return list;
     }

@@ -9,8 +9,8 @@ package com.issue1.demo.utilEntity.issue5ResultUtil;
 public class Issue5ResultUtil {
     private String serviceID_testID;
     private String service_category;
-    private Issue5Result_1 issue1result;
-    private Issue5Result_2 issue2result;
+    private Issue5Result_1 iuuse1result;
+    private Issue5Result_2 iuuse2result;
 
     public String getServiceID_testID() {
         return serviceID_testID;
@@ -28,19 +28,19 @@ public class Issue5ResultUtil {
         this.service_category = service_category;
     }
 
-    public Issue5Result_1 getIssue1result() {
-        return issue1result;
+    public Issue5Result_1 getIuuse1result() {
+        return iuuse1result;
     }
 
-    public void setIssue1result(Issue5Result_1 issue1result) {
-        this.issue1result = issue1result;
+    public void setIuuse1result(Issue5Result_1 iuuse1result) {
+        this.iuuse1result = iuuse1result;
     }
 
-    public Issue5Result_2 getIssue2result() {
-        return issue2result;
+    public Issue5Result_2 getIuuse2result() {
+        return iuuse2result;
     }
 
-    public void setIssue2result(Issue5Result_2 issue2result) {
-        this.issue2result = issue2result;
+    public void setIuuse2result(Issue5Result_2 iuuse2result) {
+        this.iuuse2result = iuuse2result;
     }
 }

@@ -43,11 +43,11 @@ public class Issue2ResultServiceDetailImpl extends ServiceImpl<Issue2ResultDetai
     }
 
     @Override
-    public List<Issue2ResultDetail> findIssue2ResultDetails(String serviceid_testid, Integer level) {
+    public List<Issue2ResultDetail> findIssue2ResultDetails(String serviceid_testid, Integer grade) {
         LambdaQueryWrapper<Issue2ResultDetail> queryWrapper = new LambdaQueryWrapper<>();
         //
         queryWrapper.eq(Issue2ResultDetail::getServiceIDtestID, serviceid_testid);
-        queryWrapper.eq(Issue2ResultDetail::getLevel, level);
+        queryWrapper.eq(Issue2ResultDetail::getGrade, grade);
         return this.baseMapper.selectList(queryWrapper);
     }
 

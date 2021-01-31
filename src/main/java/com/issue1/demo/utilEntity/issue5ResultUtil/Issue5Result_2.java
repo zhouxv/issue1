@@ -12,8 +12,16 @@ public class Issue5Result_2 {
     private String business_introduce;
     private String evaluator;
     private String evaluation_time;
-    private String evaluation_addr;
-    private EvalutionResults evaluation_results;
+    private String evaluationa_addr;
+    private EvaluationResults evalution_results;
+
+    public EvaluationResults getEvalution_results() {
+        return evalution_results;
+    }
+
+    public void setEvalution_results(EvaluationResults evalution_results) {
+        this.evalution_results = evalution_results;
+    }
 
     public String getCompany_name() {
         return company_name;
@@ -55,19 +63,12 @@ public class Issue5Result_2 {
         this.evaluation_time = evaluation_time;
     }
 
-    public String getEvaluation_addr() {
-        return evaluation_addr;
+    public String getEvaluationa_addr() {
+        return evaluationa_addr;
     }
 
-    public void setEvaluation_addr(String evaluation_addr) {
-        this.evaluation_addr = evaluation_addr;
+    public void setEvaluationa_addr(String evaluationa_addr) {
+        this.evaluationa_addr = evaluationa_addr;
     }
 
-    public EvalutionResults getEvaluation_results() {
-        return evaluation_results;
-    }
-
-    public void setEvaluation_results(EvalutionResults evaluation_results) {
-        this.evaluation_results = evaluation_results;
-    }
 }

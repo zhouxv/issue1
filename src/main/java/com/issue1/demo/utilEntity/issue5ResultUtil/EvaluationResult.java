@@ -6,9 +6,9 @@ package com.issue1.demo.utilEntity.issue5ResultUtil;
 @User：NineSun
 @Time:2021/1/29   0:24
 */
-public class EvalutionResult {
+public class EvaluationResult {
     private String index;
-    private String vonf;
+    private String conf;
 
     public String getIndex() {
         return index;
@@ -18,16 +18,16 @@ public class EvalutionResult {
         this.index = index;
     }
 
-    public String getVonf() {
-        return vonf;
-    }
-
-    public void setVonf(String vonf) {
-        this.vonf = vonf;
-    }
-
-    public EvalutionResult(String index, String vonf) {
+    public EvaluationResult(String index, String conf) {
         this.index = index;
-        this.vonf = vonf;
+        this.conf = conf;
+    }
+
+    public String getConf() {
+        return conf;
+    }
+
+    public void setConf(String conf) {
+        this.conf = conf;
     }
 }

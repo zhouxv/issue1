@@ -39,13 +39,6 @@ public class Issue5Controller extends BaseController {
         return ResponseBo.ok(this.issue5ObjectService.geneIssue5ResultUtils(null));
     }
 
-//    @GetMapping({"getOneBySTId"})
-//    public ResponseBo getOneBySTId(String serviceId_testId) {
-//        Issue2Result issue2Result = new Issue2Result();
-//        issue2Result.setServiceIDtestID(serviceId_testId);
-//        return ResponseBo.ok(this.issue5ObjectService.geneIssue5ResultUtils(issue2Result));
-//    }
-
     @GetMapping({"getOneBySTId"})
     public Issue5ResultUtil getOneBySTId(String serviceId_testId) {
         Issue2Result issue2Result = new Issue2Result();
@@ -60,7 +53,6 @@ public class Issue5Controller extends BaseController {
 //        Index index=new Index();
 //        index.setIndexid(2);
 //        Object data=this.remoteAccess.getJson("http://120.78.139.61:10080/issue1/index/getAll?indexid={indexid}",index.getIndexid());
-
 
         Object data = this.remoteAccess.postJson("http://192.168.118.146:8098/bjca/service/Task1AndTask2Result", this.issue5ObjectService.geneIssue5ResultUtils(null));
         return ResponseBo.ok(data);
