@@ -21,7 +21,7 @@ public interface IIssue2ResultDetailService extends IService<Issue2ResultDetail>
 
     List<Issue2ResultDetail> findIssue2ResultDetailsByIssue2ResultId(Integer issue2ResultId);
 
-    List<Issue2ResultDetail> findIssue2ResultDetails(String serviceid_testid, String level);
+    List<Issue2ResultDetail> findIssue2ResultDetails(String serviceid_testid, Integer level);
 
     /**
      * 新增

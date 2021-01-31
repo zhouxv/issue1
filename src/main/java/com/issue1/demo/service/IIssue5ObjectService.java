@@ -1,7 +1,7 @@
 package com.issue1.demo.service;
 
 import com.issue1.demo.entity.Issue2Result;
-import com.issue1.demo.utilEntity.Issue5ResultUtil;
+import com.issue1.demo.utilEntity.issue5ResultUtil.Issue5ResultUtil;
 
 import java.util.List;
 

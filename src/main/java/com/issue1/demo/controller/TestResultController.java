@@ -8,8 +8,8 @@ import com.issue1.demo.service.IGroupLevelService;
 import com.issue1.demo.service.ISagLevelService;
 import com.issue1.demo.service.IServiceService;
 import com.issue1.demo.service.ITestResultService;
-import com.issue1.demo.util.CountIndexLevel;
-import com.issue1.demo.util.CountSagLevel;
+import com.issue1.demo.util.countLevel.CountIndexLevel;
+import com.issue1.demo.util.countLevel.CountSagLevel;
 import com.issue1.demo.utilEntity.FormatCheckResult;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.ResponseBo;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.issue1.demo.util.CountGroupLevel.setGroupLevel;
 import static com.issue1.demo.util.FormatCheck.testResultFormatCheck;
+import static com.issue1.demo.util.countLevel.CountGroupLevel.countGroupLevel;
 
 /**
  * Controller
@@ -80,14 +80,14 @@ public class TestResultController extends BaseController {
             service.setState(2);
             this.serviceService.updateService(service);
 
-            GroupLevel groupLevel = setGroupLevel(testResult);
+            GroupLevel groupLevel = countGroupLevel(testResult);
 
             if (this.groupLevelService.createGroupLevel(groupLevel)) {
                 System.out.println("serviceId:" + groupLevel.getServiceid() + ",groupLevel添加成功");
                 service.setState(3);
                 this.serviceService.updateService(service);
 
-                SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
+                SagLevel sagLevel = CountSagLevel.countSagLevel(groupLevel);
 
                 if (this.sagLevelService.createSagLevel(sagLevel)) {
                     System.out.println("serviceId:" + sagLevel.getServiceid() + ",sagLevel");
@@ -198,8 +198,8 @@ public class TestResultController extends BaseController {
 
     public ResponseBo update(TestResult testResult, IServiceService serviceService, ITestResultService testResultService, IGroupLevelService groupLevelService, ISagLevelService sagLevelService) {
         CountIndexLevel.countTestResult(testResult);
-        GroupLevel groupLevel = setGroupLevel(testResult);
-        SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
+        GroupLevel groupLevel = countGroupLevel(testResult);
+        SagLevel sagLevel = CountSagLevel.countSagLevel(groupLevel);
 
         Service service = new Service();
         service.setServiceid(testResult.getServiceid());

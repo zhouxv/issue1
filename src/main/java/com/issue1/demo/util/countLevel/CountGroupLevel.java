@@ -1,15 +1,12 @@
-package com.issue1.demo.util;
+package com.issue1.demo.util.countLevel;
 
+import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.entity.TestResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.issue1.demo.entity.GroupLevel;
-
-/*
-转换类，把过多的变量的值存储到List中，方便处理
- */import static com.issue1.demo.util.ConvertList.*;
+import static com.issue1.demo.util.ConvertList.*;
 
 
 public class CountGroupLevel {
@@ -19,7 +16,7 @@ public class CountGroupLevel {
      * @param testResult TestResult 测试结果
      * @return groupLevel GroupLevel 安全族等级
      */
-    public static GroupLevel setGroupLevel(TestResult testResult) {
+    public static GroupLevel countGroupLevel(TestResult testResult) {
         GroupLevel groupLevel = new GroupLevel();
         groupLevel.setServiceid(testResult.getServiceid());
         List<String> listTestResult = convertTestResult(testResult);

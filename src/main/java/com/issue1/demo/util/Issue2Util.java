@@ -1,10 +1,14 @@
 package com.issue1.demo.util;
 
 import com.issue1.demo.entity.Issue2Result;
+import com.issue1.demo.entity.Issue2ResultDetail;
 import com.issue1.demo.entity.Service;
 import com.issue1.demo.entity.TestResult;
-import com.issue1.demo.utilEntity.Issue2ResultUtil;
+import com.issue1.demo.utilEntity.issue2ResultUtil.Issue2ResultDetailUtil;
+import com.issue1.demo.utilEntity.issue2ResultUtil.Issue2ResultUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Issue2Util {
@@ -18,6 +22,9 @@ public class Issue2Util {
         return service;
     }
 
+    /*
+    生成数据随机的testResult
+     */
     public static TestResult generateIssue2TestResult(Service service) {
         TestResult testResult = new TestResult();
         testResult.setServiceid(service.getServiceid());
@@ -152,11 +159,12 @@ public class Issue2Util {
         testResult.setResult128(generateResultString());
         testResult.setResult129(generateResultString());
         testResult.setResult130(generateResultString());
-
-
         return testResult;
     }
 
+    /*
+    生成某个指标项上的随机测试结果
+     */
     public static String generateResultString() {
         StringBuffer stringBuffer = new StringBuffer();
         Random random = new Random();
@@ -178,7 +186,50 @@ public class Issue2Util {
         return stringBuffer.toString();
     }
 
-    public static Issue2Result utilToEntity(Issue2ResultUtil issue2ResultUtil) {
+    /*
+   将List<Issue2ResultDetailUtil>转换为List<Issue2ResultDetail>
+    */
+    public static List<Issue2ResultDetail> detailListConvert(List<Issue2ResultDetailUtil> list) {
+        List<Issue2ResultDetail> detailList = new ArrayList<>();
+        for (Issue2ResultDetailUtil issue2ResultDetailUtil : list) {
+            detailList.add(utilToIssue2ResultDetail(issue2ResultDetailUtil));
+        }
+        return detailList;
+    }
+
+    public static Issue2ResultDetail utilToIssue2ResultDetail(Issue2ResultDetailUtil issue2ResultDetailUtil) {
+        Issue2ResultDetail issue2ResultDetail = new Issue2ResultDetail();
+        issue2ResultDetail.setConf(issue2ResultDetailUtil.conf);
+        issue2ResultDetail.setIndex(issue2ResultDetailUtil.index);
+        issue2ResultDetail.setIndex_item(issue2ResultDetailUtil.index_item);
+        issue2ResultDetail.setSecure_group(issue2ResultDetailUtil.secure_group);
+        System.out.println();
+        switch (issue2ResultDetailUtil.level) {
+            case "基础定义级": {
+                issue2ResultDetail.setLevel(1);
+            }
+            case "增强控制级": {
+                issue2ResultDetail.setLevel(2);
+            }
+            case "持续优化级": {
+                issue2ResultDetail.setLevel(3);
+            }
+            case "量化完善级": {
+                issue2ResultDetail.setLevel(4);
+            }
+        }
+        return issue2ResultDetail;
+    }
+
+    /*
+    由于接口字段命名格式驼峰和下划线混杂
+    mapper会出问题
+    所以使用了Issue2ResultUtil来接收课题二的结果
+
+    该类用于将Issue2ResultUtil转换成Issue2Result
+
+     */
+    public static Issue2Result utilToIssue2Result(Issue2ResultUtil issue2ResultUtil) {
         Issue2Result issue2Result = new Issue2Result();
         issue2Result.setServiceIDtestID(issue2ResultUtil.serviceID_TestID);
         issue2Result.setBusinessName(issue2ResultUtil.business_name);
@@ -189,7 +240,7 @@ public class Issue2Util {
         issue2Result.setEvaluationAddr(issue2ResultUtil.evaluation_addr);
         issue2Result.setServiceType(issue2ResultUtil.serviceType);
         issue2Result.setLevel(issue2ResultUtil.level);
-        issue2Result.setEvaluation_results(issue2ResultUtil.evaluation_results);
+        issue2Result.setEvaluation_results(detailListConvert(issue2ResultUtil.evaluation_results));
         return issue2Result;
     }
 }

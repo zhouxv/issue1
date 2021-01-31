@@ -1,10 +1,6 @@
-package com.issue1.demo.util;
+package com.issue1.demo.util.countLevel;
 
-import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.entity.TestResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.issue1.demo.util.ConvertList.stringToDoubleArray;
 

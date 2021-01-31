@@ -43,9 +43,9 @@ public class Issue2ResultServiceDetailImpl extends ServiceImpl<Issue2ResultDetai
     }
 
     @Override
-    public List<Issue2ResultDetail> findIssue2ResultDetails(String serviceid_testid, String level) {
+    public List<Issue2ResultDetail> findIssue2ResultDetails(String serviceid_testid, Integer level) {
         LambdaQueryWrapper<Issue2ResultDetail> queryWrapper = new LambdaQueryWrapper<>();
-        //按Id索引
+        //
         queryWrapper.eq(Issue2ResultDetail::getServiceIDtestID, serviceid_testid);
         queryWrapper.eq(Issue2ResultDetail::getLevel, level);
         return this.baseMapper.selectList(queryWrapper);

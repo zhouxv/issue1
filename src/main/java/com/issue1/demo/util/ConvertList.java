@@ -239,6 +239,9 @@ public class ConvertList {
         return doubleArray;
     }
 
+    /*
+    double 保留两位小数，四舍五入
+     */
     public static double formatDouble(double d) {
         // 新方法，如果不需要四舍五入，可以使用RoundingMode.DOWN
         BigDecimal bg = new BigDecimal(d).setScale(2, RoundingMode.UP);

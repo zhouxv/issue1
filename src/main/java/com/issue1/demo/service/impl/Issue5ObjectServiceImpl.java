@@ -2,7 +2,7 @@ package com.issue1.demo.service.impl;
 
 import com.issue1.demo.entity.*;
 import com.issue1.demo.service.*;
-import com.issue1.demo.utilEntity.Issue5ResultUtil;
+import com.issue1.demo.utilEntity.issue5ResultUtil.Issue5ResultUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +33,10 @@ public class Issue5ObjectServiceImpl implements IIssue5ObjectService {
         List<Issue5ResultUtil> issue5ResultUtils = new ArrayList<>();
         if (issue2Results.size() == 0) return issue5ResultUtils;
         for (Issue2Result result : issue2Results) {
-            List<Issue2ResultDetail> issue2ResultDetailList1 = this.iIssue2ResultDetailService.findIssue2ResultDetails(result.getServiceIDtestID(), "基础定义级");
-            List<Issue2ResultDetail> issue2ResultDetailList2 = this.iIssue2ResultDetailService.findIssue2ResultDetails(result.getServiceIDtestID(), "增强控制级");
-            List<Issue2ResultDetail> issue2ResultDetailList3 = this.iIssue2ResultDetailService.findIssue2ResultDetails(result.getServiceIDtestID(), "持续优化级");
-            List<Issue2ResultDetail> issue2ResultDetailList4 = this.iIssue2ResultDetailService.findIssue2ResultDetails(result.getServiceIDtestID(), "量化完善级");
+            List<Issue2ResultDetail> issue2ResultDetailList1 = this.iIssue2ResultDetailService.findIssue2ResultDetails(result.getServiceIDtestID(), 1);
+            List<Issue2ResultDetail> issue2ResultDetailList2 = this.iIssue2ResultDetailService.findIssue2ResultDetails(result.getServiceIDtestID(), 2);
+            List<Issue2ResultDetail> issue2ResultDetailList3 = this.iIssue2ResultDetailService.findIssue2ResultDetails(result.getServiceIDtestID(), 3);
+            List<Issue2ResultDetail> issue2ResultDetailList4 = this.iIssue2ResultDetailService.findIssue2ResultDetails(result.getServiceIDtestID(), 4);
             Service service = this.serviceService.findOneServiceByIssue2ResultId(result.getIssue2resultid());
             TestResult testResult = this.testResultService.findOneTestResultByServiceId(service.getServiceid());
             GroupLevel groupLevel = this.groupLevelService.findOneGroupLevel(service.getServiceid());

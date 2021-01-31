@@ -1,11 +1,12 @@
 package com.issue1.demo.util;
 
 import com.issue1.demo.entity.*;
-import com.issue1.demo.utilEntity.*;
+import com.issue1.demo.utilEntity.issue5ResultUtil.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.issue1.demo.util.ConvertList.convertGroupLevel;
 import static com.issue1.demo.util.ConvertList.stringToDoubleArray2;
 
 /*
@@ -47,31 +48,12 @@ public class Issue5Util {
     public static List<Issue1GroupLevel> convertToIssue1GroupLevel(GroupLevel groupLevel) {
         List<Issue1GroupLevel> issue1GroupLevels = new ArrayList<>();
         String[] groups = new String[]{"边界防护", "访问控制", "身份鉴别", "密码支持", "入侵防范", "监控与检测", "恶意代码防范", "数据保密性", "数据完整性", "数据和应用可用性", "数据销毁", "数据备份恢复", "个人数据处理", "安全审计与验证", "机构配置管理", "剩余信息保护", "安全策略", "事件预警和处置", "管理制度", "安全日志", "流程管理", "服务协议", "电子合同",};
+        List<String> stringList = convertGroupLevel(groupLevel);
         List<Double[]> list = new ArrayList<>();
 
-        list.add(stringToDoubleArray2(groupLevel.getPerimetersecurity()));
-        list.add(stringToDoubleArray2(groupLevel.getAccesscontrol()));
-        list.add(stringToDoubleArray2(groupLevel.getIdentityauthentication()));
-        list.add(stringToDoubleArray2(groupLevel.getCryptographicsupport()));
-        list.add(stringToDoubleArray2(groupLevel.getIntrusionprevention()));
-        list.add(stringToDoubleArray2(groupLevel.getMonitordetect()));
-        list.add(stringToDoubleArray2(groupLevel.getMaliciouscoderesistance()));
-        list.add(stringToDoubleArray2(groupLevel.getDataconfidentiality()));
-        list.add(stringToDoubleArray2(groupLevel.getDataintegrity()));
-        list.add(stringToDoubleArray2(groupLevel.getDataavailability()));
-        list.add(stringToDoubleArray2(groupLevel.getDatadestruction()));
-        list.add(stringToDoubleArray2(groupLevel.getBackuprecovery()));
-        list.add(stringToDoubleArray2(groupLevel.getDataprivacy()));
-        list.add(stringToDoubleArray2(groupLevel.getSecurityvalidation()));
-        list.add(stringToDoubleArray2(groupLevel.getOrganizationalmanagement()));
-        list.add(stringToDoubleArray2(groupLevel.getRedundancycleanup()));
-        list.add(stringToDoubleArray2(groupLevel.getSecuritypolicy()));
-        list.add(stringToDoubleArray2(groupLevel.getEventalert()));
-        list.add(stringToDoubleArray2(groupLevel.getSystemmanagement()));
-        list.add(stringToDoubleArray2(groupLevel.getSecuritylog()));
-        list.add(stringToDoubleArray2(groupLevel.getProcessmanagement()));
-        list.add(stringToDoubleArray2(groupLevel.getServiceagreement()));
-        list.add(stringToDoubleArray2(groupLevel.getElectroniccontract()));
+        for (int i = 0; i < stringList.size(); i++) {
+            list.add(stringToDoubleArray2(stringList.get(i)));
+        }
 
         for (int i = 0; i < 23; i++) {
             Issue1GroupLevel issue1GroupLevel = new Issue1GroupLevel();
@@ -90,8 +72,8 @@ public class Issue5Util {
         issue5Result2.setBusiness_introduce(issue2Result.getBusinessIntroduce());
         issue5Result2.setEvaluator(issue2Result.getEvaluator());
         issue5Result2.setEvaluation_time(issue2Result.getEvaluationTime());
-        issue5Result2.setEvaluationa_addr(issue2Result.getEvaluationAddr());
-        issue5Result2.setEvalution_results(convertToEvalutionResults(issue2ResultDetailList));
+        issue5Result2.setEvaluation_addr(issue2Result.getEvaluationAddr());
+        issue5Result2.setEvaluation_results(convertToEvalutionResults(issue2ResultDetailList));
         return issue5Result2;
     }
 

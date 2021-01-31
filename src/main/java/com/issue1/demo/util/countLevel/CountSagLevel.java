@@ -1,4 +1,4 @@
-package com.issue1.demo.util;
+package com.issue1.demo.util.countLevel;
 
 import com.issue1.demo.entity.GroupLevel;
 import com.issue1.demo.entity.SagLevel;
@@ -11,7 +11,7 @@ import static com.issue1.demo.util.ConvertList.stringToDoubleList;
 
 
 public class CountSagLevel {
-    public static SagLevel setSagLevel(GroupLevel groupLevel) {
+    public static SagLevel countSagLevel(GroupLevel groupLevel) {
         SagLevel sagLevel = new SagLevel();
         sagLevel.setServiceid(groupLevel.getServiceid());
         List<String> sList = new ArrayList<>();
@@ -79,7 +79,7 @@ public class CountSagLevel {
         sagLevel.setGresult(
                 totalCount(gList, new double[]{1, 1, 1, 1, 1, 1, 1, 1}, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
         );
-        sagLevel.setLevel(countFinalLevel(sagLevel.getSresult(), sagLevel.getAresult(), sagLevel.getGresult()));
+        sagLevel.setLevel(countTopLevel(sagLevel.getSresult(), sagLevel.getAresult(), sagLevel.getGresult()));
         return sagLevel;
     }
 
@@ -141,7 +141,7 @@ public class CountSagLevel {
      * @param g String G类四个等级的得分和最终等级
      * @return String 最终等级
      */
-    public static String countFinalLevel(String s, String a, String g) {
+    public static String countTopLevel(String s, String a, String g) {
         List<Double> sDoubleList = stringToDoubleList(s);
         List<Double> aDoubleList = stringToDoubleList(a);
         List<Double> gDoubleList = stringToDoubleList(g);

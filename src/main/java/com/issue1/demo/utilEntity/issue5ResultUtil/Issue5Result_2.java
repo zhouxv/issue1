@@ -1,4 +1,4 @@
-package com.issue1.demo.utilEntity;
+package com.issue1.demo.utilEntity.issue5ResultUtil;
 
 /*
 @Note：
@@ -12,8 +12,8 @@ public class Issue5Result_2 {
     private String business_introduce;
     private String evaluator;
     private String evaluation_time;
-    private String evaluationa_addr;
-    private EvalutionResults evalution_results;
+    private String evaluation_addr;
+    private EvalutionResults evaluation_results;
 
     public String getCompany_name() {
         return company_name;
@@ -55,19 +55,19 @@ public class Issue5Result_2 {
         this.evaluation_time = evaluation_time;
     }
 
-    public String getEvaluationa_addr() {
-        return evaluationa_addr;
+    public String getEvaluation_addr() {
+        return evaluation_addr;
     }
 
-    public void setEvaluationa_addr(String evaluationa_addr) {
-        this.evaluationa_addr = evaluationa_addr;
+    public void setEvaluation_addr(String evaluation_addr) {
+        this.evaluation_addr = evaluation_addr;
     }
 
-    public EvalutionResults getEvalution_results() {
-        return evalution_results;
+    public EvalutionResults getEvaluation_results() {
+        return evaluation_results;
     }
 
-    public void setEvalution_results(EvalutionResults evalution_results) {
-        this.evalution_results = evalution_results;
+    public void setEvaluation_results(EvalutionResults evaluation_results) {
+        this.evaluation_results = evaluation_results;
     }
 }

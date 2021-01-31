@@ -1,4 +1,4 @@
-package com.issue1.demo.utilEntity;
+package com.issue1.demo.utilEntity.issue5ResultUtil;
 
 /*
 @Note：

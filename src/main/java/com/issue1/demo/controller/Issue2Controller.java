@@ -2,9 +2,9 @@ package com.issue1.demo.controller;
 
 import com.issue1.demo.entity.*;
 import com.issue1.demo.service.*;
-import com.issue1.demo.util.CountIndexLevel;
-import com.issue1.demo.util.CountSagLevel;
-import com.issue1.demo.utilEntity.Issue2ResultUtil;
+import com.issue1.demo.util.countLevel.CountIndexLevel;
+import com.issue1.demo.util.countLevel.CountSagLevel;
+import com.issue1.demo.utilEntity.issue2ResultUtil.Issue2ResultUtil;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.ResponseBo;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.issue1.demo.util.CountGroupLevel.setGroupLevel;
 import static com.issue1.demo.util.Issue2Util.*;
+import static com.issue1.demo.util.countLevel.CountGroupLevel.countGroupLevel;
 
 /**
  * Controller
@@ -73,7 +73,8 @@ public class Issue2Controller extends BaseController {
             }
             return ResponseBo.fail(stringBuffer.toString());
         }
-        Issue2Result issue2Result = utilToEntity(issue2ResultUtil);
+
+        Issue2Result issue2Result = utilToIssue2Result(issue2ResultUtil);
 
         List<Issue2Result> issue2Results = this.issue2ResultService.findIssue2ResultsBySTId(issue2Result);
         if (!issue2Results.isEmpty()) {
@@ -119,14 +120,14 @@ public class Issue2Controller extends BaseController {
             service.setState(2);
             this.serviceService.updateService(service);
 
-            GroupLevel groupLevel = setGroupLevel(testResult);
+            GroupLevel groupLevel = countGroupLevel(testResult);
 
             if (this.groupLevelService.createGroupLevel(groupLevel)) {
                 System.out.println("serviceId:" + groupLevel.getServiceid() + ",groupLevel添加成功");
                 service.setState(3);
                 this.serviceService.updateService(service);
 
-                SagLevel sagLevel = CountSagLevel.setSagLevel(groupLevel);
+                SagLevel sagLevel = CountSagLevel.countSagLevel(groupLevel);
 
                 if (this.sagLevelService.createSagLevel(sagLevel)) {
                     System.out.println("serviceId:" + sagLevel.getServiceid() + ",sagLevel");
