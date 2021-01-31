@@ -26,17 +26,15 @@ public class Issue5Controller extends BaseController {
 
     private final IRemoteAccess remoteAccess;
     private final IIssue5Service issue5ObjectService;
-    private final IIssue2ResultService issue2ResultService;
 
     public Issue5Controller(IRemoteAccess remoteAccess, IIssue5Service issue5ObjectService, IIssue2ResultService issue2ResultService) {
         this.remoteAccess = remoteAccess;
         this.issue5ObjectService = issue5ObjectService;
-        this.issue2ResultService = issue2ResultService;
     }
 
     @GetMapping({"getOneBy"})
     public Issue5ResultUtil getOneBy(String serviceId_testId) {
-        return this.issue5ObjectService.geneIssue5ResultUtils(serviceId_testId);
+        return this.issue5ObjectService.geneOneIssue5ResultUtil(serviceId_testId);
     }
 
 
@@ -51,7 +49,7 @@ public class Issue5Controller extends BaseController {
     public ResponseBo submitOne(String serviceId_testId) {
         Object data;
 
-        Issue5ResultUtil issue5ResultUtil = this.issue5ObjectService.geneIssue5ResultUtils(serviceId_testId);
+        Issue5ResultUtil issue5ResultUtil = this.issue5ObjectService.geneOneIssue5ResultUtil(serviceId_testId);
 
         data = this.remoteAccess.postJson("http://192.168.118.146:8098/bjca/service/Task1AndTask2Result", issue5ResultUtil);
 

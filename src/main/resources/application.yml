@@ -21,7 +21,7 @@ spring:
       db-type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.jdbc.Driver
       # 课题五和阿里云，本地mysql5
-      url: jdbc:mysql://localhost:3306/issue1?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
+      url: jdbc:mysql://localhost:3306/issue1_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
       # 本地，本地mysql8
       username: zhouxv
       password: ZX13784126656G

@@ -207,15 +207,19 @@ public class Issue2Util {
         switch (issue2ResultDetailUtil.level) {
             case "基础定义级": {
                 issue2ResultDetail.setGrade(1);
+                break;
             }
             case "增强控制级": {
                 issue2ResultDetail.setGrade(2);
+                break;
             }
             case "持续优化级": {
                 issue2ResultDetail.setGrade(3);
+                break;
             }
             case "量化完善级": {
                 issue2ResultDetail.setGrade(4);
+                break;
             }
         }
         return issue2ResultDetail;

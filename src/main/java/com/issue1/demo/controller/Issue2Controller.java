@@ -95,7 +95,13 @@ public class Issue2Controller extends BaseController {
         Issue2Result issue2Result = utilToIssue2Result(issue2ResultUtil);
 
         Issue2Result issue2Result1 = this.issue2ResultService.findOneIssue2Result(issue2Result);
+
         if (!(issue2Result1 == null)) {
+            List<Issue2ResultDetail> issue2ResultDetailList = this.iIssue2ResultDetailService.findIssue2ResultDetails(issue2Result.getServiceIDtestID(), issue2Result.getLevel());
+            if (!issue2ResultDetailList.isEmpty())
+                return ResponseBo.fail("ServiceId_TestId = " + issue2Result1.getServiceIDtestID() + " 的 " + issue2Result1.getLevel() + " 级测试结果已提交，请勿重复提交");
+
+
             List<Issue2ResultDetail> list = issue2Result.getEvaluation_results();
 
             for (Issue2ResultDetail issue2ResultDetail : list) {
@@ -106,7 +112,7 @@ public class Issue2Controller extends BaseController {
             if (!this.iIssue2ResultDetailService.createIssue2ResultDetailBatch(list))
                 ResponseBo.fail("issue2ResultDetail添加失败");
 
-            return ResponseBo.ok("serviceid_testid = " + issue2Result1.getIssue2resultid() + " 的数据补充成功");
+            return ResponseBo.ok("serviceid_testid = " + issue2Result1.getServiceIDtestID() + " 的数据补充成功");
         }
 
         if (!this.issue2ResultService.createIssue2Result(issue2Result))

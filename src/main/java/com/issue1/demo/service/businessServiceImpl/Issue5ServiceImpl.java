@@ -34,7 +34,7 @@ public class Issue5ServiceImpl implements IIssue5Service {
     }
 
     @Override
-    public Issue5ResultUtil geneIssue5ResultUtils(String serviceId_testId) {
+    public Issue5ResultUtil geneOneIssue5ResultUtil(String serviceId_testId) {
         Issue2Result issue2Result = this.issue2ResultService.findOneIssue2Result(new Issue2Result(serviceId_testId));
 
         if (issue2Result == null) return null;
@@ -58,7 +58,7 @@ public class Issue5ServiceImpl implements IIssue5Service {
     @Override
     @Async
     public void accessIssue5API(String url, String serviceId_testId) {
-        Issue5ResultUtil issue5ResultUtil = this.geneIssue5ResultUtils(serviceId_testId);
+        Issue5ResultUtil issue5ResultUtil = this.geneOneIssue5ResultUtil(serviceId_testId);
         Object data = this.remoteAccess.postJson(url, issue5ResultUtil);
         log.info(data.toString());
     }

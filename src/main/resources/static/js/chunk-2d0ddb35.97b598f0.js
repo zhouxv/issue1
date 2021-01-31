@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0ddb35"],{8304:function(e,n,t){"use strict";t.r(n);var a=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("d2-container",[t("template",{slot:"header"},[e._v("已标识申请管理")])],2)},c=[],i={name:"reviewer-certificationapplication-index5"},r=i,l=t("c701"),o=Object(l["a"])(r,a,c,!1,null,null,null);n["default"]=o.exports}}]);
-//# sourceMappingURL=chunk-2d0ddb35.97b598f0.js.map
