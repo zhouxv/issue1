@@ -1,5 +1,6 @@
 package com.issue1.demo.service.businessServiceImpl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.issue1.demo.entity.*;
 import com.issue1.demo.service.businessService.IIssue5Service;
 import com.issue1.demo.service.businessService.IRemoteAccess;
@@ -57,9 +58,21 @@ public class Issue5ServiceImpl implements IIssue5Service {
 
     @Override
     @Async
-    public void accessIssue5API(String url, String serviceId_testId) {
+    public void accessIssue5ApiAsync(String url, String serviceId_testId) {
         Issue5ResultUtil issue5ResultUtil = this.geneOneIssue5ResultUtil(serviceId_testId);
+        Object issue5ResultUtilJson = JSONObject.toJSON(issue5ResultUtil);
+        log.info(issue5ResultUtilJson.toString());
         Object data = this.remoteAccess.postJson(url, issue5ResultUtil);
         log.info(data.toString());
+    }
+
+    @Override
+    public Object accessIssue5ApiSync(String url, String serviceId_testId) {
+        Issue5ResultUtil issue5ResultUtil = this.geneOneIssue5ResultUtil(serviceId_testId);
+        Object issue5ResultUtilJson = JSONObject.toJSON(issue5ResultUtil);
+        log.info(issue5ResultUtilJson.toString());
+        Object data = this.remoteAccess.postJson(url, issue5ResultUtil);
+        log.info(data.toString());
+        return data;
     }
 }

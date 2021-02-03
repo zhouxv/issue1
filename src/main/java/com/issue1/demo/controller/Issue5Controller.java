@@ -48,11 +48,7 @@ public class Issue5Controller extends BaseController {
     @GetMapping({"submitOneBy"})
     public ResponseBo submitOne(String serviceId_testId) {
         Object data;
-
-        Issue5ResultUtil issue5ResultUtil = this.issue5ObjectService.geneOneIssue5ResultUtil(serviceId_testId);
-
-        data = this.remoteAccess.postJson("http://192.168.118.146:8098/bjca/service/Task1AndTask2Result", issue5ResultUtil);
-
+        data = this.issue5ObjectService.accessIssue5ApiSync("http://192.168.118.146:8098/bjca/service/Task1AndTask2Result", serviceId_testId);
         return ResponseBo.ok(data);
     }
 }

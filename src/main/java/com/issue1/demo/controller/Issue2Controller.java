@@ -154,7 +154,7 @@ public class Issue2Controller extends BaseController {
                     service.setServicelevel(sagLevel.getLevel());
                     this.serviceService.updateService(service);
 
-                    this.issue5Service.accessIssue5API("http://192.168.118.146:8098/bjca/service/Task1AndTask2Result", issue2Result.getServiceIDtestID());
+                    this.issue5Service.accessIssue5ApiAsync("http://192.168.118.146:8098/bjca/service/Task1AndTask2Result", issue2Result.getServiceIDtestID());
 
                     return ResponseBo.ok("serviceid_testid = " + issue2Result.getServiceIDtestID() + " 的数据新增成功");
                 } else {
