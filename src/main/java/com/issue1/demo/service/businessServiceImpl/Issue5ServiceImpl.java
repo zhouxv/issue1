@@ -80,7 +80,7 @@ public class Issue5ServiceImpl implements IIssue5Service {
             log.info("第" + (i + 1) + "次传输开始");
             data = this.remoteAccess.postJson(url, issue5ResultUtil);
             ResponseResult result = JSON.parseObject(JSON.toJSONString(data), ResponseResult.class);
-            if (result.getMsg() == "0") {
+            if (result.getCode() == "0") {
                 log.info("第" + (i + 1) + "次传输成功");
                 return data;
             }
