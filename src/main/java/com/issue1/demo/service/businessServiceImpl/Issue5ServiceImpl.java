@@ -1,10 +1,12 @@
 package com.issue1.demo.service.businessServiceImpl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.issue1.demo.entity.*;
 import com.issue1.demo.service.businessService.IIssue5Service;
 import com.issue1.demo.service.businessService.IRemoteAccess;
 import com.issue1.demo.service.entityService.*;
+import com.issue1.demo.utilEntity.ResponseResult;
 import com.issue1.demo.utilEntity.issue5ResultUtil.Issue5ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -68,11 +70,23 @@ public class Issue5ServiceImpl implements IIssue5Service {
 
     @Override
     public Object accessIssue5ApiSync(String url, String serviceId_testId) {
+
         Issue5ResultUtil issue5ResultUtil = this.geneOneIssue5ResultUtil(serviceId_testId);
-        Object issue5ResultUtilJson = JSONObject.toJSON(issue5ResultUtil);
-        log.info(issue5ResultUtilJson.toString());
-        Object data = this.remoteAccess.postJson(url, issue5ResultUtil);
-        log.info(data.toString());
+        log.info("发给课题五的数据为");
+        log.info(JSON.toJSONString(issue5ResultUtil));
+
+        Object data = null;
+        for (int i = 0; i < 3; i++) {
+            log.info("第" + (i + 1) + "次传输开始");
+            data = this.remoteAccess.postJson(url, issue5ResultUtil);
+            ResponseResult result = JSON.parseObject(JSON.toJSONString(data), ResponseResult.class);
+            if (result.getMsg() == "0") {
+                log.info("第" + (i + 1) + "次传输成功");
+                return data;
+            }
+            log.info("第" + (i + 1) + "次传输失败");
+        }
+
         return data;
     }
 }
