@@ -3,6 +3,8 @@ spring:
     active: dev
 
 ---
+issue5:
+  url: http://host5:8099/bjca/service/Task1AndTask2Result
 server:
   port: 10080
   servlet:

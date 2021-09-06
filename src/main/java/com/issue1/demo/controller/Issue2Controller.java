@@ -9,6 +9,7 @@ import com.issue1.demo.utilEntity.issue2ResultUtil.Issue2ResultUtil;
 import com.issue1.dependence.common.controller.BaseController;
 import com.issue1.dependence.common.entity.ResponseBo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +30,8 @@ import static com.issue1.demo.util.countLevel.CountGroupLevel.countGroupLevel;
 @RestController
 @RequestMapping({"issue2"})
 public class Issue2Controller extends BaseController {
+    @Value("${issue5.url}")
+    private String issue5URL;
     private final IServiceService serviceService;
     private final ITestResultService testResultService;
     private final IGroupLevelService groupLevelService;
@@ -47,11 +50,6 @@ public class Issue2Controller extends BaseController {
         this.issue5Service = issue5Service;
     }
 
-//    @GetMapping("test")
-//    public ResponseBo test() {
-//        Object o=this.issue5Service.accessIssue5API("http://localhost:10080/issue1/issue2/add","1_1");
-//        return ResponseBo.ok(o);
-//    }
 
     @GetMapping({"getAll"})
     public ResponseBo getAllIssue2Results() {
@@ -154,7 +152,7 @@ public class Issue2Controller extends BaseController {
                     service.setServicelevel(sagLevel.getLevel());
                     this.serviceService.updateService(service);
 
-                    this.issue5Service.accessIssue5ApiAsync("http://192.168.118.146:8098/bjca/service/Task1AndTask2Result", issue2Result.getServiceIDtestID());
+                    this.issue5Service.accessIssue5ApiAsync(issue5URL, issue2Result.getServiceIDtestID());
 
                     return ResponseBo.ok("serviceid_testid = " + issue2Result.getServiceIDtestID() + " 的数据新增成功");
                 } else {
